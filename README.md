@@ -1,5 +1,7 @@
 # Day 14 — Deployment, Benchmark & Observability
 
+> **Trạng thái bài làm 25/11/2026:** CP1–CP8 đã thực hiện; agent Part 6 deploy trên Railway, bản chấm cuối PASS 12/12 (42/42 checks). Xem [Mission Answers](MISSION_ANSWERS.md), [Deployment](DEPLOYMENT.md), [Benchmark Report](BENCHMARK_REPORT.md) và [kiểm tra trước commit/push](SUBMISSION_AUDIT.md). Bằng chứng nằm trong `reports/`, `benchmark-results/`, `screenshots/`; secret local được Git ignore. Các thay đổi vẫn cần commit/push để có trên GitHub.
+
 > Đưa agent lên cloud, đo xem nó nhanh và đúng tới đâu, rồi giám sát nó khi chạy thật.
 
 > **AICB-P1 · VinUniversity 2026**  

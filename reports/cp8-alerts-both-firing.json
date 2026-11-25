@@ -1,0 +1,123 @@
+{
+  "checked_at_utc": "2026-11-25T10:43:11.630232+00:00",
+  "rules": [
+    {
+      "state": "firing",
+      "name": "LLMCostBurnRateHigh",
+      "query": "sum(rate(llm_cost_usd_total{job=\"agent\"}[5m])) * 3600 > 2",
+      "duration": 120,
+      "keepFiringFor": 0,
+      "labels": {
+        "severity": "warning"
+      },
+      "annotations": {
+        "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: ${{ $value | printf \"%.2f\" }}/gi\u1edd",
+        "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+      },
+      "alerts": [
+        {
+          "labels": {
+            "alertname": "LLMCostBurnRateHigh",
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: $3.64/gi\u1edd",
+            "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+          },
+          "state": "firing",
+          "activeAt": "2026-11-25T10:34:17.571501534Z",
+          "value": "3.6431383728814875e+00"
+        }
+      ],
+      "health": "ok",
+      "evaluationTime": 0.000858681,
+      "lastEvaluation": "2026-11-25T10:43:07.572462174Z",
+      "type": "alerting"
+    },
+    {
+      "state": "firing",
+      "name": "AgentHighErrorRate",
+      "query": "sum(rate(http_requests_total{job=\"agent\",route=\"/ask\",status=~\"5..\"}[1m])) / sum(rate(http_requests_total{job=\"agent\",route=\"/ask\"}[1m])) > 0.05",
+      "duration": 60,
+      "keepFiringFor": 0,
+      "labels": {
+        "severity": "critical"
+      },
+      "annotations": {
+        "description": "Error rate hi\u1ec7n t\u1ea1i: {{ $value | humanizePercentage }} (SLO: < 5%)",
+        "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+      },
+      "alerts": [
+        {
+          "labels": {
+            "alertname": "AgentHighErrorRate",
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Error rate hi\u1ec7n t\u1ea1i: 20.12% (SLO: < 5%)",
+            "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+          },
+          "state": "firing",
+          "activeAt": "2026-11-25T10:41:07.401817116Z",
+          "value": "2.011764705882353e-01"
+        }
+      ],
+      "health": "ok",
+      "evaluationTime": 0.000890358,
+      "lastEvaluation": "2026-11-25T10:43:07.403690337Z",
+      "type": "alerting"
+    },
+    {
+      "state": "firing",
+      "name": "AgentHighLatencyP95",
+      "query": "histogram_quantile(0.95, sum by (le) (rate(http_request_duration_seconds_bucket{job=\"agent\",route=\"/ask\"}[1m]))) > 1",
+      "duration": 120,
+      "keepFiringFor": 0,
+      "labels": {
+        "severity": "warning"
+      },
+      "annotations": {
+        "description": "p95 hi\u1ec7n t\u1ea1i: {{ $value | humanizeDuration }} (SLO: < 1s)",
+        "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+      },
+      "alerts": [
+        {
+          "labels": {
+            "alertname": "AgentHighLatencyP95",
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "p95 hi\u1ec7n t\u1ea1i: 1.89s (SLO: < 1s)",
+            "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+          },
+          "state": "firing",
+          "activeAt": "2026-11-25T10:41:07.401817116Z",
+          "value": "1.8898963730569946e+00"
+        }
+      ],
+      "health": "ok",
+      "evaluationTime": 0.00070945,
+      "lastEvaluation": "2026-11-25T10:43:07.404609459Z",
+      "type": "alerting"
+    },
+    {
+      "state": "inactive",
+      "name": "AgentInstanceDown",
+      "query": "up{job=\"agent\"} == 0",
+      "duration": 30,
+      "keepFiringFor": 0,
+      "labels": {
+        "severity": "critical"
+      },
+      "annotations": {
+        "description": "Prometheus kh\u00f4ng g\u1ecdi \u0111\u01b0\u1ee3c /metrics c\u1ee7a {{ $labels.instance }} trong 30s",
+        "summary": "Instance agent {{ $labels.instance }} kh\u00f4ng scrape \u0111\u01b0\u1ee3c"
+      },
+      "alerts": [],
+      "health": "ok",
+      "evaluationTime": 0.000130052,
+      "lastEvaluation": "2026-11-25T10:43:07.405329574Z",
+      "type": "alerting"
+    }
+  ]
+}

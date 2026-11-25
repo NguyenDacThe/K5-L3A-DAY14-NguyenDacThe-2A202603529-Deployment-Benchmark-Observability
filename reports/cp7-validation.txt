@@ -1,0 +1,1 @@
+PASS: 10 required JSON reports, identical submission copies, 2100 measured load requests, Markdown load rows match JSON, final eval 23/23 with no regression, exact CI shell gate passed, dataset hash unchanged, app syntax valid, ports 8001/8002 released.

@@ -1,0 +1,12 @@
+{
+  "06-lab-complete/Dockerfile": "6e167f49fe2309be1b04e15010a127840e1c3d772d00aae236a85bda1567221c",
+  "06-lab-complete/requirements.txt": "920edd956c852d446bff3b3d55d3c182f287694abe4f6a705e1fd5d5b4fa3671",
+  "06-lab-complete/railway.toml": "28a8279cc3c2b0222fe11787e2cf550605fb87d18ccd6490ea53c3e2f1d7df43",
+  "06-lab-complete/app/auth.py": "20b5f9898377ab4069062d99dc23d92f121dfbbe853d7a90888c43edf3958b85",
+  "06-lab-complete/app/config.py": "3bb3d39db21e29238d09f539b853496f330e1e2140b788cbabae2846a958da5d",
+  "06-lab-complete/app/cost_guard.py": "e3cbd896a7e8fec24a3fb13ff50a242f28f8375c5f764f75913a50c2d19d04e5",
+  "06-lab-complete/app/main.py": "e0e287eec75c51b0c4a49f1ded446fbc17d37048e5e551e24eb2079a757a3508",
+  "06-lab-complete/app/rate_limiter.py": "5e27a248823e14daf370cf5c89e2154779727fc3e780f9f9e3e6824ca5d53d34",
+  "06-lab-complete/app/redis_client.py": "32b9977794e09cf77181a090efb655d235fdc10046873306569a893b9c76cce1",
+  "06-lab-complete/utils/mock_llm.py": "de99cb9ec611aba55b2d9681e3667baef23b6b8c25652d57af1da669671f030d"
+}

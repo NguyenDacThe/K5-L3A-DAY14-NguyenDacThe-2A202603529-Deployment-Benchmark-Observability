@@ -1,0 +1,247 @@
+CP3 API Security verification
+Executed at: 2026-11-25T09:28:29.476599+00:00
+Runtime: WSL2 / posix
+
+
+Develop: missing key -> 401
+HTTP/1.1 401 Unauthorized
+date: Wed, 25 Nov 2026 09:28:36 GMT
+server: uvicorn
+content-length: 67
+content-type: application/json
+
+{"detail":"Missing API key. Include header: X-API-Key: <your-key>"}
+
+Develop: wrong key -> 403
+HTTP/1.1 403 Forbidden
+date: Wed, 25 Nov 2026 09:28:36 GMT
+server: uvicorn
+content-length: 29
+content-type: application/json
+
+{"detail":"Invalid API key."}
+
+Develop: correct local demo key -> 200
+HTTP/1.1 200 OK
+date: Wed, 25 Nov 2026 09:28:36 GMT
+server: uvicorn
+content-length: 145
+content-type: application/json
+
+{"question":"Hello","answer":"Đây là câu trả lời từ AI agent (mock). Trong production, đây sẽ là response từ OpenAI/Anthropic."}
+Verification server stopped.
+
+Production: missing JWT -> 401
+HTTP/1.1 401 Unauthorized
+date: Wed, 25 Nov 2026 09:28:43 GMT
+server: uvicorn
+www-authenticate: Bearer
+content-length: 76
+content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-xss-protection: 1; mode=block
+referrer-policy: strict-origin-when-cross-origin
+
+{"detail":"Authentication required. Include: Authorization: Bearer <token>"}
+
+Production: POST /auth/token -> 200 (JWT and hint masked)
+{"access_token": "<MASKED>", "token_type": "bearer", "expires_in_minutes": 60, "hint": "Include in header: Authorization: Bearer <MASKED>"}
+
+Production: request 1 -> 200
+HTTP/1.1 200 OK
+date: Wed, 25 Nov 2026 09:28:43 GMT
+server: uvicorn
+content-length: 187
+content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-xss-protection: 1; mode=block
+referrer-policy: strict-origin-when-cross-origin
+
+{"question":"Test 1","answer":"Tôi là AI agent được deploy lên cloud. Câu hỏi của bạn đã được nhận.","usage":{"requests_remaining":9,"budget_remaining_usd":1.9e-05}}
+
+Production: request 2 -> 200
+HTTP/1.1 200 OK
+date: Wed, 25 Nov 2026 09:28:43 GMT
+server: uvicorn
+content-length: 187
+content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-xss-protection: 1; mode=block
+referrer-policy: strict-origin-when-cross-origin
+
+{"question":"Test 2","answer":"Tôi là AI agent được deploy lên cloud. Câu hỏi của bạn đã được nhận.","usage":{"requests_remaining":8,"budget_remaining_usd":3.7e-05}}
+
+Production: request 3 -> 200
+HTTP/1.1 200 OK
+date: Wed, 25 Nov 2026 09:28:43 GMT
+server: uvicorn
+content-length: 187
+content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-xss-protection: 1; mode=block
+referrer-policy: strict-origin-when-cross-origin
+
+{"question":"Test 3","answer":"Tôi là AI agent được deploy lên cloud. Câu hỏi của bạn đã được nhận.","usage":{"requests_remaining":7,"budget_remaining_usd":5.6e-05}}
+
+Production: request 4 -> 200
+HTTP/1.1 200 OK
+date: Wed, 25 Nov 2026 09:28:43 GMT
+server: uvicorn
+content-length: 179
+content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-xss-protection: 1; mode=block
+referrer-policy: strict-origin-when-cross-origin
+
+{"question":"Test 4","answer":"Agent đang hoạt động tốt! (mock response) Hỏi thêm câu hỏi đi nhé.","usage":{"requests_remaining":6,"budget_remaining_usd":7.2e-05}}
+
+Production: request 5 -> 200
+HTTP/1.1 200 OK
+date: Wed, 25 Nov 2026 09:28:43 GMT
+server: uvicorn
+content-length: 179
+content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-xss-protection: 1; mode=block
+referrer-policy: strict-origin-when-cross-origin
+
+{"question":"Test 5","answer":"Agent đang hoạt động tốt! (mock response) Hỏi thêm câu hỏi đi nhé.","usage":{"requests_remaining":5,"budget_remaining_usd":8.8e-05}}
+
+Production: request 6 -> 200
+HTTP/1.1 200 OK
+date: Wed, 25 Nov 2026 09:28:43 GMT
+server: uvicorn
+content-length: 211
+content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-xss-protection: 1; mode=block
+referrer-policy: strict-origin-when-cross-origin
+
+{"question":"Test 6","answer":"Đây là câu trả lời từ AI agent (mock). Trong production, đây sẽ là response từ OpenAI/Anthropic.","usage":{"requests_remaining":4,"budget_remaining_usd":0.000109}}
+
+Production: request 7 -> 200
+HTTP/1.1 200 OK
+date: Wed, 25 Nov 2026 09:28:43 GMT
+server: uvicorn
+content-length: 180
+content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-xss-protection: 1; mode=block
+referrer-policy: strict-origin-when-cross-origin
+
+{"question":"Test 7","answer":"Agent đang hoạt động tốt! (mock response) Hỏi thêm câu hỏi đi nhé.","usage":{"requests_remaining":3,"budget_remaining_usd":0.000125}}
+
+Production: request 8 -> 200
+HTTP/1.1 200 OK
+date: Wed, 25 Nov 2026 09:28:43 GMT
+server: uvicorn
+content-length: 180
+content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-xss-protection: 1; mode=block
+referrer-policy: strict-origin-when-cross-origin
+
+{"question":"Test 8","answer":"Agent đang hoạt động tốt! (mock response) Hỏi thêm câu hỏi đi nhé.","usage":{"requests_remaining":2,"budget_remaining_usd":0.000142}}
+
+Production: request 9 -> 200
+HTTP/1.1 200 OK
+date: Wed, 25 Nov 2026 09:28:45 GMT
+server: uvicorn
+content-length: 180
+content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-xss-protection: 1; mode=block
+referrer-policy: strict-origin-when-cross-origin
+
+{"question":"Test 9","answer":"Agent đang hoạt động tốt! (mock response) Hỏi thêm câu hỏi đi nhé.","usage":{"requests_remaining":1,"budget_remaining_usd":0.000158}}
+
+Production: request 10 -> 200
+HTTP/1.1 200 OK
+date: Wed, 25 Nov 2026 09:28:45 GMT
+server: uvicorn
+content-length: 181
+content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-xss-protection: 1; mode=block
+referrer-policy: strict-origin-when-cross-origin
+
+{"question":"Test 10","answer":"Agent đang hoạt động tốt! (mock response) Hỏi thêm câu hỏi đi nhé.","usage":{"requests_remaining":0,"budget_remaining_usd":0.000174}}
+
+Production: request 11 -> 429
+HTTP/1.1 429 Too Many Requests
+date: Wed, 25 Nov 2026 09:28:45 GMT
+server: uvicorn
+x-ratelimit-limit: 10
+x-ratelimit-remaining: 0
+x-ratelimit-reset: 1795598985
+retry-after: 59
+content-length: 98
+content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-xss-protection: 1; mode=block
+referrer-policy: strict-origin-when-cross-origin
+
+{"detail":{"error":"Rate limit exceeded","limit":10,"window_seconds":60,"retry_after_seconds":59}}
+
+Production: request 12 -> 429
+HTTP/1.1 429 Too Many Requests
+date: Wed, 25 Nov 2026 09:28:45 GMT
+server: uvicorn
+x-ratelimit-limit: 10
+x-ratelimit-remaining: 0
+x-ratelimit-reset: 1795598985
+retry-after: 59
+content-length: 98
+content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-xss-protection: 1; mode=block
+referrer-policy: strict-origin-when-cross-origin
+
+{"detail":{"error":"Rate limit exceeded","limit":10,"window_seconds":60,"retry_after_seconds":59}}
+
+Production: GET /me/usage -> 200
+HTTP/1.1 200 OK
+date: Wed, 25 Nov 2026 09:28:45 GMT
+server: uvicorn
+content-length: 184
+content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-xss-protection: 1; mode=block
+referrer-policy: strict-origin-when-cross-origin
+
+{"user_id":"student","date":"2026-11-25","requests":10,"input_tokens":40,"output_tokens":280,"cost_usd":0.000174,"budget_usd":1.0,"budget_remaining_usd":0.999826,"budget_used_pct":0.0}
+
+Production: student cannot access admin stats -> 403
+HTTP/1.1 403 Forbidden
+date: Wed, 25 Nov 2026 09:28:45 GMT
+server: uvicorn
+content-length: 23
+content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-xss-protection: 1; mode=block
+referrer-policy: strict-origin-when-cross-origin
+
+{"detail":"Admin only"}
+Verification server stopped.
+
+Cost guard checks: direct module calls, not HTTP requests
+Unused budget: allowed
+Per-user budget: 402 {"error": "Daily budget exceeded", "used_usd": 0.00075, "budget_usd": 0.0005, "resets_at": "midnight UTC"}
+Global budget: 503 "Service temporarily unavailable due to budget limits. Try again tomorrow."
+
+PASS: API key, JWT, rate limit, role restriction, and cost guard verified. Both servers stopped.

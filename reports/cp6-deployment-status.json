@@ -1,0 +1,41 @@
+{
+  "project_id": "93b45f7d-c21d-4c37-bcff-a2d81d9e28f3",
+  "project_name": "day14-production-agent",
+  "workspace_id": "3fb08cb3-2f0a-4292-92b3-e2dc3fe97795",
+  "environments": [
+    {
+      "id": "50a43efb-2781-4b9e-9f1f-8200297ee45f",
+      "name": "production",
+      "services": [
+        {
+          "id": "f757017e-8d72-4ee3-83a6-346d81c53057",
+          "name": "agent",
+          "deployment_id": "a4f5b9cd-a4e4-4b57-b0ba-4eb42bd053c0",
+          "status": "SUCCESS",
+          "domains": {
+            "customDomains": [],
+            "serviceDomains": [
+              {
+                "domain": "agent-production-702ecd1c.up.railway.app",
+                "id": "818f8ccd-8121-49fa-985b-5f2c83b5d1e0",
+                "targetPort": 8000
+              }
+            ]
+          },
+          "healthcheck_path": "/health"
+        },
+        {
+          "id": "09e90357-2a6b-4cef-a4cb-e1434bd01fdd",
+          "name": "Redis",
+          "deployment_id": "26b413fb-07d3-40ed-8ca6-a92c63fc02c8",
+          "status": "SUCCESS",
+          "domains": {
+            "customDomains": [],
+            "serviceDomains": []
+          },
+          "healthcheck_path": null
+        }
+      ]
+    }
+  ]
+}

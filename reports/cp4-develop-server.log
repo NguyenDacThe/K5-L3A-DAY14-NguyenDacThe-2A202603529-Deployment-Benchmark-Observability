@@ -1,0 +1,21 @@
+2026-11-25 09:31:28,823 INFO Starting agent on port 49455
+INFO:     Started server process [433]
+INFO:     Waiting for application startup.
+2026-11-25 09:31:29,609 INFO Agent starting up...
+2026-11-25 09:31:29,610 INFO Loading model and checking dependencies...
+2026-11-25 09:31:29,811 INFO ✅ Agent is ready!
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:49455 (Press CTRL+C to quit)
+INFO:     127.0.0.1:46878 - "GET /ready HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46884 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46900 - "GET /ready HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     127.0.0.1:46904 - "POST /ask?question=hello HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46914 - "POST /ask?question=hello HTTP/1.1" 200 OK
+INFO:     Waiting for connections to close. (CTRL+C to force quit)
+INFO:     Waiting for application shutdown.
+2026-11-25 09:31:36,595 INFO 🔄 Graceful shutdown initiated...
+2026-11-25 09:31:36,597 INFO ✅ Shutdown complete
+INFO:     Application shutdown complete.
+INFO:     Finished server process [433]
+2026-11-25 09:31:36,601 INFO Received signal 15 — uvicorn will handle graceful shutdown

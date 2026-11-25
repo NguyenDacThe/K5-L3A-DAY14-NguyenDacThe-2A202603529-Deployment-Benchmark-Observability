@@ -1,0 +1,153 @@
+{
+  "checked_at_utc": "2026-11-25T11:02:25.355207+00:00",
+  "ready_to_commit": true,
+  "remote_submission_current": false,
+  "note": "Working tree changes are not committed/pushed; GitHub Actions and LMS submission remain pending.",
+  "checks": [
+    {
+      "name": "Repository identity/public",
+      "passed": true,
+      "detail": "Anonymous GitHub HTTP 200; origin matches named public fork (saved check)."
+    },
+    {
+      "name": "Full production grader",
+      "passed": true,
+      "detail": "Original grader with public URL: 12/12 criteria, 42/42 checks, exit 0."
+    },
+    {
+      "name": "Public deployment",
+      "passed": true,
+      "detail": "Saved HTTPS checks at 2026-11-25T10:49:15.069405+00:00: 200/200/401/200."
+    },
+    {
+      "name": "Submission documents",
+      "passed": true,
+      "detail": "Part 1–5, grader checklist, CP7/8, AI log, deployment URL and completed benchmark report."
+    },
+    {
+      "name": "Ten JSON artifacts and copies",
+      "passed": true,
+      "detail": "All 10 required JSON files exist and match develop copies; seven loads have 300 requests each."
+    },
+    {
+      "name": "eval_v1",
+      "passed": true,
+      "detail": "1/23 correct; fixed and production must have 23/23."
+    },
+    {
+      "name": "eval_v2",
+      "passed": true,
+      "detail": "21/23 correct; fixed and production must have 23/23."
+    },
+    {
+      "name": "eval_v2_fixed",
+      "passed": true,
+      "detail": "23/23 correct; fixed and production must have 23/23."
+    },
+    {
+      "name": "cp8-eval-production",
+      "passed": true,
+      "detail": "23/23 correct; fixed and production must have 23/23."
+    },
+    {
+      "name": "No quality regression",
+      "passed": true,
+      "detail": "Fixed and production JSON gates require 100%, both PASS with zero regressions."
+    },
+    {
+      "name": "Locust scale 1",
+      "passed": true,
+      "detail": "Aggregated requests/failures/p95/RPS = (7812, 74, 340, 65.62); root CSV matches original and report."
+    },
+    {
+      "name": "Locust scale 3",
+      "passed": true,
+      "detail": "Aggregated requests/failures/p95/RPS = (7798, 69, 230, 65.42); root CSV matches original and report."
+    },
+    {
+      "name": "Screenshot dashboard",
+      "passed": true,
+      "detail": "PNG 1908x872, 58175 bytes; images also reviewed visually."
+    },
+    {
+      "name": "Screenshot running",
+      "passed": true,
+      "detail": "PNG 1908x872, 121710 bytes; images also reviewed visually."
+    },
+    {
+      "name": "Screenshot test",
+      "passed": true,
+      "detail": "PNG 1908x872, 69156 bytes; images also reviewed visually."
+    },
+    {
+      "name": "Screenshot grafana-dashboard",
+      "passed": true,
+      "detail": "PNG 1800x1100, 251861 bytes; images also reviewed visually."
+    },
+    {
+      "name": "Screenshot jaeger-slow-trace",
+      "passed": true,
+      "detail": "PNG 1800x1100, 79152 bytes; images also reviewed visually."
+    },
+    {
+      "name": "Screenshot jaeger-error-trace",
+      "passed": true,
+      "detail": "PNG 1800x1100, 91302 bytes; images also reviewed visually."
+    },
+    {
+      "name": "Screenshot prometheus-alert-firing",
+      "passed": true,
+      "detail": "PNG 1800x1100, 39289 bytes; images also reviewed visually."
+    },
+    {
+      "name": "Two simultaneous firing alerts",
+      "passed": true,
+      "detail": "Error alert 82.67s and latency alert 142.90s; same firing snapshot; original thresholds."
+    },
+    {
+      "name": "Trace/log correlation",
+      "passed": true,
+      "detail": "Real slow/error trace IDs match captured agent JSON logs; error has exception."
+    },
+    {
+      "name": "Alert rule validation",
+      "passed": true,
+      "detail": "promtool original rules: SUCCESS."
+    },
+    {
+      "name": "Protected grader/dataset unchanged",
+      "passed": true,
+      "detail": "Grader, golden dataset, eval and load scripts match HEAD."
+    },
+    {
+      "name": "Git whitespace",
+      "passed": true,
+      "detail": "git diff --check passes."
+    },
+    {
+      "name": "No env in index/history",
+      "passed": true,
+      "detail": "Forbidden env paths in tracked files/history: 0."
+    },
+    {
+      "name": "Secret scan of commit candidates",
+      "passed": true,
+      "detail": "294 candidate files; known local/cloud secrets and token/private-key patterns; findings: []. Values never printed."
+    },
+    {
+      "name": "Submission contact data",
+      "passed": true,
+      "detail": "Email/Vietnam phone pattern scan of authored reports/docs: []; screenshots visually reviewed; pattern scan is not exhaustive."
+    },
+    {
+      "name": "GitHub file sizes",
+      "passed": true,
+      "detail": "No candidate file >=100 MiB; oversized files: []."
+    },
+    {
+      "name": "Local CP8 cleanup",
+      "passed": true,
+      "detail": "No containers or networks remain for k5-day14-observability; cloud retained."
+    }
+  ]
+}

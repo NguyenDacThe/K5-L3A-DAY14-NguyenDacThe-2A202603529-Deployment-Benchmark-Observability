@@ -1,0 +1,14 @@
+NAME                       IMAGE                    COMMAND                  SERVICE   CREATED              STATUS                        PORTS
+k5-day14-scaling-agent-1   k5-day14-scaling-agent   "python -m uvicorn a…"   agent     About a minute ago   Up About a minute (healthy)   8000/tcp
+k5-day14-scaling-agent-2   k5-day14-scaling-agent   "python -m uvicorn a…"   agent     About a minute ago   Up About a minute (healthy)   8000/tcp
+k5-day14-scaling-agent-3   k5-day14-scaling-agent   "python -m uvicorn a…"   agent     About a minute ago   Up About a minute (healthy)   8000/tcp
+k5-day14-scaling-nginx-1   nginx:alpine             "/docker-entrypoint.…"   nginx     About a minute ago   Up About a minute             0.0.0.0:8080->80/tcp, [::]:8080->80/tcp
+k5-day14-scaling-redis-1   redis:7-alpine           "docker-entrypoint.s…"   redis     About a minute ago   Up About a minute (healthy)   6379/tcp
+NAME                       IMAGE                    COMMAND                  SERVICE   CREATED         STATUS                          PORTS
+k5-day14-scaling-agent-1   k5-day14-scaling-agent   "python -m uvicorn a…"   agent     3 minutes ago   Exited (0) About a minute ago   
+k5-day14-scaling-agent-2   k5-day14-scaling-agent   "python -m uvicorn a…"   agent     3 minutes ago   Up 2 minutes (healthy)          8000/tcp
+k5-day14-scaling-agent-3   k5-day14-scaling-agent   "python -m uvicorn a…"   agent     3 minutes ago   Up 2 minutes (healthy)          8000/tcp
+k5-day14-scaling-nginx-1   nginx:alpine             "/docker-entrypoint.…"   nginx     3 minutes ago   Up 21 seconds                   0.0.0.0:8080->80/tcp, [::]:8080->80/tcp
+k5-day14-scaling-redis-1   redis:7-alpine           "docker-entrypoint.s…"   redis     3 minutes ago   Up 3 minutes (healthy)          6379/tcp
+
+Cleanup: docker compose -p k5-day14-scaling down completed; no project containers remained.

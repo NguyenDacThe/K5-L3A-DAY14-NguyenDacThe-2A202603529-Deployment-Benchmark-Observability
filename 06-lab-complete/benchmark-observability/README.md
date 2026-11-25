@@ -304,7 +304,7 @@ curl -i http://localhost:8080/metrics   # → 404: /metrics không public ra ngo
 **Headless** (cho benchmark có số liệu lưu lại):
 
 ```bash
-docker compose run --rm locust -f /mnt/locust/locustfile.py --host http://nginx \
+docker compose run --no-deps --rm locust -f /mnt/locust/locustfile.py --host http://nginx \
   --headless -u 30 -r 5 -t 2m --csv /mnt/results/v2_2replicas
 # Kết quả: benchmark-results/v2_2replicas_stats.csv
 ```
@@ -400,7 +400,7 @@ Với mỗi thí nghiệm: chụp màn hình dashboard + alert, ghi lại **mấ
 ```bash
 # 1 instance
 docker compose up -d --scale agent=1
-docker compose run --rm locust -f /mnt/locust/locustfile.py --host http://nginx \
+docker compose run --no-deps --rm locust -f /mnt/locust/locustfile.py --host http://nginx \
   --headless -u 100 -r 10 -t 2m --csv /mnt/results/scale_1
 
 # 3 instance
@@ -409,7 +409,7 @@ docker compose run --rm locust -f /mnt/locust/locustfile.py --host http://nginx 
   --headless -u 100 -r 10 -t 2m --csv /mnt/results/scale_3
 ```
 
-Không cần restart gì cả: Prometheus (`dns_sd_configs`) và Nginx (`server agent:8000 resolve`) đều hỏi lại Docker DNS mỗi 10 giây nên tự thấy instance mới. Chờ ~15 giây rồi kiểm tra panel "Requests/s theo instance" trước khi chạy Locust.
+Không cần restart gì cả: Prometheus (`dns_sd_configs`) và Nginx (`server agent:8000 resolve`) đều hỏi lại Docker DNS mỗi 10 giây nên tự thấy instance mới. Chờ ~15 giây rồi kiểm tra panel "Requests/s theo instance" trước khi chạy Locust. Dùng `run --no-deps` để Compose không khởi động lại dependency với số replica mặc định (2), làm sai phép đo 1/3 instance. Lớp K5 dùng cùng `-p k5-day14-observability` cho mọi lệnh theo `CHECKPOINTS.md`.
 
 So sánh RPS, p95, error rate giữa 2 lần chạy rồi giải thích. Nếu scale lên 3 mà p95 gần như không đổi, nút thắt nằm ở đâu? (Gợi ý: xem panel LLM latency.)
 

@@ -1,0 +1,13 @@
+{
+    "networks":  [
+
+                 ],
+    "containers":  [
+
+                   ],
+    "method":  "docker ps -a and docker network ls filtered by compose project label returned no entries",
+    "clean":  true,
+    "cloud_retained":  true,
+    "checked_at_utc":  "2026-11-25T10:59:06.9700064Z",
+    "project":  "k5-day14-observability"
+}

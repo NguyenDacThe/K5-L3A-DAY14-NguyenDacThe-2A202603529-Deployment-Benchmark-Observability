@@ -1,0 +1,56 @@
+{
+  "session_id": "2fe0e81d-41ce-463d-a686-da01190b7f94",
+  "messages": [
+    {
+      "role": "user",
+      "content": "What is Docker?",
+      "timestamp": "2026-11-25T09:33:18.642309+00:00"
+    },
+    {
+      "role": "assistant",
+      "content": "Container là cách đóng gói app để chạy ở mọi nơi. Build once, run anywhere!",
+      "timestamp": "2026-11-25T09:33:18.760755+00:00"
+    },
+    {
+      "role": "user",
+      "content": "Why do we need containers?",
+      "timestamp": "2026-11-25T09:33:18.766446+00:00"
+    },
+    {
+      "role": "assistant",
+      "content": "Agent đang hoạt động tốt! (mock response) Hỏi thêm câu hỏi đi nhé.",
+      "timestamp": "2026-11-25T09:33:18.881718+00:00"
+    },
+    {
+      "role": "user",
+      "content": "What is Kubernetes?",
+      "timestamp": "2026-11-25T09:33:18.887944+00:00"
+    },
+    {
+      "role": "assistant",
+      "content": "Tôi là AI agent được deploy lên cloud. Câu hỏi của bạn đã được nhận.",
+      "timestamp": "2026-11-25T09:33:19.039996+00:00"
+    },
+    {
+      "role": "user",
+      "content": "How does load balancing work?",
+      "timestamp": "2026-11-25T09:33:19.043621+00:00"
+    },
+    {
+      "role": "assistant",
+      "content": "Tôi là AI agent được deploy lên cloud. Câu hỏi của bạn đã được nhận.",
+      "timestamp": "2026-11-25T09:33:19.179768+00:00"
+    },
+    {
+      "role": "user",
+      "content": "What is Redis used for?",
+      "timestamp": "2026-11-25T09:33:19.184757+00:00"
+    },
+    {
+      "role": "assistant",
+      "content": "Tôi là AI agent được deploy lên cloud. Câu hỏi của bạn đã được nhận.",
+      "timestamp": "2026-11-25T09:33:19.304712+00:00"
+    }
+  ],
+  "count": 10
+}

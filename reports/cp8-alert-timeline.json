@@ -1,0 +1,3229 @@
+{
+  "injection": {
+    "config": {
+      "MOCK_SLOW_RATE": 0.3,
+      "MOCK_ERROR_RATE": 0.2,
+      "LLM_MODEL": "mock-llm-small",
+      "AGENT_VERSION": "v2",
+      "users": 30
+    },
+    "started_at_utc": "2026-11-25T10:40:48.7283799Z",
+    "combined": true,
+    "experiments": [
+      "A",
+      "B"
+    ]
+  },
+  "first_firing": {
+    "AgentHighErrorRate": {
+      "observed_at_utc": "2026-11-25T10:42:11.395698+00:00",
+      "elapsed_seconds": 82.67,
+      "alerts": [
+        {
+          "labels": {
+            "alertname": "AgentHighErrorRate",
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Error rate hi\u1ec7n t\u1ea1i: 18.53% (SLO: < 5%)",
+            "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+          },
+          "state": "firing",
+          "activeAt": "2026-11-25T10:41:07.401817116Z",
+          "value": "1.8531889290012032e-01"
+        }
+      ]
+    },
+    "AgentHighLatencyP95": {
+      "observed_at_utc": "2026-11-25T10:43:11.630232+00:00",
+      "elapsed_seconds": 142.9,
+      "alerts": [
+        {
+          "labels": {
+            "alertname": "AgentHighLatencyP95",
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "p95 hi\u1ec7n t\u1ea1i: 1.89s (SLO: < 1s)",
+            "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+          },
+          "state": "firing",
+          "activeAt": "2026-11-25T10:41:07.401817116Z",
+          "value": "1.8898963730569946e+00"
+        }
+      ]
+    }
+  },
+  "observations": [
+    {
+      "checked_at_utc": "2026-11-25T10:41:06.169740+00:00",
+      "rules": [
+        {
+          "state": "firing",
+          "name": "LLMCostBurnRateHigh",
+          "query": "sum(rate(llm_cost_usd_total{job=\"agent\"}[5m])) * 3600 > 2",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: ${{ $value | printf \"%.2f\" }}/gi\u1edd",
+            "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "LLMCostBurnRateHigh",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: $4.69/gi\u1edd",
+                "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+              },
+              "state": "firing",
+              "activeAt": "2026-11-25T10:34:17.571501534Z",
+              "value": "4.69073664099675e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000546598,
+          "lastEvaluation": "2026-11-25T10:41:02.572306229Z",
+          "type": "alerting"
+        },
+        {
+          "state": "inactive",
+          "name": "AgentHighErrorRate",
+          "query": "sum(rate(http_requests_total{job=\"agent\",route=\"/ask\",status=~\"5..\"}[1m])) / sum(rate(http_requests_total{job=\"agent\",route=\"/ask\"}[1m])) > 0.05",
+          "duration": 60,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Error rate hi\u1ec7n t\u1ea1i: {{ $value | humanizePercentage }} (SLO: < 5%)",
+            "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+          },
+          "alerts": [],
+          "health": "ok",
+          "evaluationTime": 0.000410281,
+          "lastEvaluation": "2026-11-25T10:41:02.403640167Z",
+          "type": "alerting"
+        },
+        {
+          "state": "inactive",
+          "name": "AgentHighLatencyP95",
+          "query": "histogram_quantile(0.95, sum by (le) (rate(http_request_duration_seconds_bucket{job=\"agent\",route=\"/ask\"}[1m]))) > 1",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "p95 hi\u1ec7n t\u1ea1i: {{ $value | humanizeDuration }} (SLO: < 1s)",
+            "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+          },
+          "alerts": [],
+          "health": "ok",
+          "evaluationTime": 0.000342749,
+          "lastEvaluation": "2026-11-25T10:41:02.404057563Z",
+          "type": "alerting"
+        },
+        {
+          "state": "inactive",
+          "name": "AgentInstanceDown",
+          "query": "up{job=\"agent\"} == 0",
+          "duration": 30,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Prometheus kh\u00f4ng g\u1ecdi \u0111\u01b0\u1ee3c /metrics c\u1ee7a {{ $labels.instance }} trong 30s",
+            "summary": "Instance agent {{ $labels.instance }} kh\u00f4ng scrape \u0111\u01b0\u1ee3c"
+          },
+          "alerts": [],
+          "health": "ok",
+          "evaluationTime": 6.8523e-05,
+          "lastEvaluation": "2026-11-25T10:41:02.404405374Z",
+          "type": "alerting"
+        }
+      ]
+    },
+    {
+      "checked_at_utc": "2026-11-25T10:41:11.188709+00:00",
+      "rules": [
+        {
+          "state": "firing",
+          "name": "LLMCostBurnRateHigh",
+          "query": "sum(rate(llm_cost_usd_total{job=\"agent\"}[5m])) * 3600 > 2",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: ${{ $value | printf \"%.2f\" }}/gi\u1edd",
+            "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "LLMCostBurnRateHigh",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: $4.56/gi\u1edd",
+                "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+              },
+              "state": "firing",
+              "activeAt": "2026-11-25T10:34:17.571501534Z",
+              "value": "4.560933473827931e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000439262,
+          "lastEvaluation": "2026-11-25T10:41:07.572195916Z",
+          "type": "alerting"
+        },
+        {
+          "state": "pending",
+          "name": "AgentHighErrorRate",
+          "query": "sum(rate(http_requests_total{job=\"agent\",route=\"/ask\",status=~\"5..\"}[1m])) / sum(rate(http_requests_total{job=\"agent\",route=\"/ask\"}[1m])) > 0.05",
+          "duration": 60,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Error rate hi\u1ec7n t\u1ea1i: {{ $value | humanizePercentage }} (SLO: < 5%)",
+            "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighErrorRate",
+                "severity": "critical"
+              },
+              "annotations": {
+                "description": "Error rate hi\u1ec7n t\u1ea1i: 32.73% (SLO: < 5%)",
+                "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+              },
+              "state": "pending",
+              "activeAt": "2026-11-25T10:41:07.401817116Z",
+              "value": "3.2727272727272727e-01"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000675297,
+          "lastEvaluation": "2026-11-25T10:41:07.403425831Z",
+          "type": "alerting"
+        },
+        {
+          "state": "pending",
+          "name": "AgentHighLatencyP95",
+          "query": "histogram_quantile(0.95, sum by (le) (rate(http_request_duration_seconds_bucket{job=\"agent\",route=\"/ask\"}[1m]))) > 1",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "p95 hi\u1ec7n t\u1ea1i: {{ $value | humanizeDuration }} (SLO: < 1s)",
+            "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighLatencyP95",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "p95 hi\u1ec7n t\u1ea1i: 1.804s (SLO: < 1s)",
+                "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+              },
+              "state": "pending",
+              "activeAt": "2026-11-25T10:41:07.401817116Z",
+              "value": "1.8035714285714284e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000344308,
+          "lastEvaluation": "2026-11-25T10:41:07.404111026Z",
+          "type": "alerting"
+        },
+        {
+          "state": "inactive",
+          "name": "AgentInstanceDown",
+          "query": "up{job=\"agent\"} == 0",
+          "duration": 30,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Prometheus kh\u00f4ng g\u1ecdi \u0111\u01b0\u1ee3c /metrics c\u1ee7a {{ $labels.instance }} trong 30s",
+            "summary": "Instance agent {{ $labels.instance }} kh\u00f4ng scrape \u0111\u01b0\u1ee3c"
+          },
+          "alerts": [],
+          "health": "ok",
+          "evaluationTime": 5.8749e-05,
+          "lastEvaluation": "2026-11-25T10:41:07.404460926Z",
+          "type": "alerting"
+        }
+      ]
+    },
+    {
+      "checked_at_utc": "2026-11-25T10:41:16.197868+00:00",
+      "rules": [
+        {
+          "state": "firing",
+          "name": "LLMCostBurnRateHigh",
+          "query": "sum(rate(llm_cost_usd_total{job=\"agent\"}[5m])) * 3600 > 2",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: ${{ $value | printf \"%.2f\" }}/gi\u1edd",
+            "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "LLMCostBurnRateHigh",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: $4.45/gi\u1edd",
+                "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+              },
+              "state": "firing",
+              "activeAt": "2026-11-25T10:34:17.571501534Z",
+              "value": "4.448238284316788e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000429054,
+          "lastEvaluation": "2026-11-25T10:41:12.57235469Z",
+          "type": "alerting"
+        },
+        {
+          "state": "pending",
+          "name": "AgentHighErrorRate",
+          "query": "sum(rate(http_requests_total{job=\"agent\",route=\"/ask\",status=~\"5..\"}[1m])) / sum(rate(http_requests_total{job=\"agent\",route=\"/ask\"}[1m])) > 0.05",
+          "duration": 60,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Error rate hi\u1ec7n t\u1ea1i: {{ $value | humanizePercentage }} (SLO: < 5%)",
+            "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighErrorRate",
+                "severity": "critical"
+              },
+              "annotations": {
+                "description": "Error rate hi\u1ec7n t\u1ea1i: 29.92% (SLO: < 5%)",
+                "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+              },
+              "state": "pending",
+              "activeAt": "2026-11-25T10:41:07.401817116Z",
+              "value": "2.992125984251969e-01"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000882263,
+          "lastEvaluation": "2026-11-25T10:41:12.403099502Z",
+          "type": "alerting"
+        },
+        {
+          "state": "pending",
+          "name": "AgentHighLatencyP95",
+          "query": "histogram_quantile(0.95, sum by (le) (rate(http_request_duration_seconds_bucket{job=\"agent\",route=\"/ask\"}[1m]))) > 1",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "p95 hi\u1ec7n t\u1ea1i: {{ $value | humanizeDuration }} (SLO: < 1s)",
+            "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighLatencyP95",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "p95 hi\u1ec7n t\u1ea1i: 1.841s (SLO: < 1s)",
+                "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+              },
+              "state": "pending",
+              "activeAt": "2026-11-25T10:41:07.401817116Z",
+              "value": "1.8412499999999996e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000586856,
+          "lastEvaluation": "2026-11-25T10:41:12.403999833Z",
+          "type": "alerting"
+        },
+        {
+          "state": "inactive",
+          "name": "AgentInstanceDown",
+          "query": "up{job=\"agent\"} == 0",
+          "duration": 30,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Prometheus kh\u00f4ng g\u1ecdi \u0111\u01b0\u1ee3c /metrics c\u1ee7a {{ $labels.instance }} trong 30s",
+            "summary": "Instance agent {{ $labels.instance }} kh\u00f4ng scrape \u0111\u01b0\u1ee3c"
+          },
+          "alerts": [],
+          "health": "ok",
+          "evaluationTime": 0.000108541,
+          "lastEvaluation": "2026-11-25T10:41:12.404595849Z",
+          "type": "alerting"
+        }
+      ]
+    },
+    {
+      "checked_at_utc": "2026-11-25T10:41:21.208588+00:00",
+      "rules": [
+        {
+          "state": "firing",
+          "name": "LLMCostBurnRateHigh",
+          "query": "sum(rate(llm_cost_usd_total{job=\"agent\"}[5m])) * 3600 > 2",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: ${{ $value | printf \"%.2f\" }}/gi\u1edd",
+            "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "LLMCostBurnRateHigh",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: $4.34/gi\u1edd",
+                "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+              },
+              "state": "firing",
+              "activeAt": "2026-11-25T10:34:17.571501534Z",
+              "value": "4.341096512179433e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.0008096,
+          "lastEvaluation": "2026-11-25T10:41:17.573080486Z",
+          "type": "alerting"
+        },
+        {
+          "state": "pending",
+          "name": "AgentHighErrorRate",
+          "query": "sum(rate(http_requests_total{job=\"agent\",route=\"/ask\",status=~\"5..\"}[1m])) / sum(rate(http_requests_total{job=\"agent\",route=\"/ask\"}[1m])) > 0.05",
+          "duration": 60,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Error rate hi\u1ec7n t\u1ea1i: {{ $value | humanizePercentage }} (SLO: < 5%)",
+            "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighErrorRate",
+                "severity": "critical"
+              },
+              "annotations": {
+                "description": "Error rate hi\u1ec7n t\u1ea1i: 25.63% (SLO: < 5%)",
+                "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+              },
+              "state": "pending",
+              "activeAt": "2026-11-25T10:41:07.401817116Z",
+              "value": "2.562814070351759e-01"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000943031,
+          "lastEvaluation": "2026-11-25T10:41:17.403884677Z",
+          "type": "alerting"
+        },
+        {
+          "state": "pending",
+          "name": "AgentHighLatencyP95",
+          "query": "histogram_quantile(0.95, sum by (le) (rate(http_request_duration_seconds_bucket{job=\"agent\",route=\"/ask\"}[1m]))) > 1",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "p95 hi\u1ec7n t\u1ea1i: {{ $value | humanizeDuration }} (SLO: < 1s)",
+            "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighLatencyP95",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "p95 hi\u1ec7n t\u1ea1i: 1.876s (SLO: < 1s)",
+                "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+              },
+              "state": "pending",
+              "activeAt": "2026-11-25T10:41:07.401817116Z",
+              "value": "1.8756249999999999e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.001017385,
+          "lastEvaluation": "2026-11-25T10:41:17.404843529Z",
+          "type": "alerting"
+        },
+        {
+          "state": "inactive",
+          "name": "AgentInstanceDown",
+          "query": "up{job=\"agent\"} == 0",
+          "duration": 30,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Prometheus kh\u00f4ng g\u1ecdi \u0111\u01b0\u1ee3c /metrics c\u1ee7a {{ $labels.instance }} trong 30s",
+            "summary": "Instance agent {{ $labels.instance }} kh\u00f4ng scrape \u0111\u01b0\u1ee3c"
+          },
+          "alerts": [],
+          "health": "ok",
+          "evaluationTime": 0.000146464,
+          "lastEvaluation": "2026-11-25T10:41:17.40587579Z",
+          "type": "alerting"
+        }
+      ]
+    },
+    {
+      "checked_at_utc": "2026-11-25T10:41:26.228611+00:00",
+      "rules": [
+        {
+          "state": "firing",
+          "name": "LLMCostBurnRateHigh",
+          "query": "sum(rate(llm_cost_usd_total{job=\"agent\"}[5m])) * 3600 > 2",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: ${{ $value | printf \"%.2f\" }}/gi\u1edd",
+            "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "LLMCostBurnRateHigh",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: $4.23/gi\u1edd",
+                "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+              },
+              "state": "firing",
+              "activeAt": "2026-11-25T10:34:17.571501534Z",
+              "value": "4.234232250229304e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000860836,
+          "lastEvaluation": "2026-11-25T10:41:22.573090201Z",
+          "type": "alerting"
+        },
+        {
+          "state": "pending",
+          "name": "AgentHighErrorRate",
+          "query": "sum(rate(http_requests_total{job=\"agent\",route=\"/ask\",status=~\"5..\"}[1m])) / sum(rate(http_requests_total{job=\"agent\",route=\"/ask\"}[1m])) > 0.05",
+          "duration": 60,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Error rate hi\u1ec7n t\u1ea1i: {{ $value | humanizePercentage }} (SLO: < 5%)",
+            "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighErrorRate",
+                "severity": "critical"
+              },
+              "annotations": {
+                "description": "Error rate hi\u1ec7n t\u1ea1i: 23.19% (SLO: < 5%)",
+                "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+              },
+              "state": "pending",
+              "activeAt": "2026-11-25T10:41:07.401817116Z",
+              "value": "2.318840579710145e-01"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.001113374,
+          "lastEvaluation": "2026-11-25T10:41:22.403762667Z",
+          "type": "alerting"
+        },
+        {
+          "state": "pending",
+          "name": "AgentHighLatencyP95",
+          "query": "histogram_quantile(0.95, sum by (le) (rate(http_request_duration_seconds_bucket{job=\"agent\",route=\"/ask\"}[1m]))) > 1",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "p95 hi\u1ec7n t\u1ea1i: {{ $value | humanizeDuration }} (SLO: < 1s)",
+            "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighLatencyP95",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "p95 hi\u1ec7n t\u1ea1i: 1.883s (SLO: < 1s)",
+                "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+              },
+              "state": "pending",
+              "activeAt": "2026-11-25T10:41:07.401817116Z",
+              "value": "1.883050847457627e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.00063555,
+          "lastEvaluation": "2026-11-25T10:41:22.404898759Z",
+          "type": "alerting"
+        },
+        {
+          "state": "inactive",
+          "name": "AgentInstanceDown",
+          "query": "up{job=\"agent\"} == 0",
+          "duration": 30,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Prometheus kh\u00f4ng g\u1ecdi \u0111\u01b0\u1ee3c /metrics c\u1ee7a {{ $labels.instance }} trong 30s",
+            "summary": "Instance agent {{ $labels.instance }} kh\u00f4ng scrape \u0111\u01b0\u1ee3c"
+          },
+          "alerts": [],
+          "health": "ok",
+          "evaluationTime": 0.000107247,
+          "lastEvaluation": "2026-11-25T10:41:22.405542Z",
+          "type": "alerting"
+        }
+      ]
+    },
+    {
+      "checked_at_utc": "2026-11-25T10:41:31.248551+00:00",
+      "rules": [
+        {
+          "state": "firing",
+          "name": "LLMCostBurnRateHigh",
+          "query": "sum(rate(llm_cost_usd_total{job=\"agent\"}[5m])) * 3600 > 2",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: ${{ $value | printf \"%.2f\" }}/gi\u1edd",
+            "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "LLMCostBurnRateHigh",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: $4.13/gi\u1edd",
+                "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+              },
+              "state": "firing",
+              "activeAt": "2026-11-25T10:34:17.571501534Z",
+              "value": "4.130847845643475e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000815114,
+          "lastEvaluation": "2026-11-25T10:41:27.572236877Z",
+          "type": "alerting"
+        },
+        {
+          "state": "pending",
+          "name": "AgentHighErrorRate",
+          "query": "sum(rate(http_requests_total{job=\"agent\",route=\"/ask\",status=~\"5..\"}[1m])) / sum(rate(http_requests_total{job=\"agent\",route=\"/ask\"}[1m])) > 0.05",
+          "duration": 60,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Error rate hi\u1ec7n t\u1ea1i: {{ $value | humanizePercentage }} (SLO: < 5%)",
+            "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighErrorRate",
+                "severity": "critical"
+              },
+              "annotations": {
+                "description": "Error rate hi\u1ec7n t\u1ea1i: 22.19% (SLO: < 5%)",
+                "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+              },
+              "state": "pending",
+              "activeAt": "2026-11-25T10:41:07.401817116Z",
+              "value": "2.219020172910663e-01"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000976574,
+          "lastEvaluation": "2026-11-25T10:41:27.403149125Z",
+          "type": "alerting"
+        },
+        {
+          "state": "pending",
+          "name": "AgentHighLatencyP95",
+          "query": "histogram_quantile(0.95, sum by (le) (rate(http_request_duration_seconds_bucket{job=\"agent\",route=\"/ask\"}[1m]))) > 1",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "p95 hi\u1ec7n t\u1ea1i: {{ $value | humanizeDuration }} (SLO: < 1s)",
+            "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighLatencyP95",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "p95 hi\u1ec7n t\u1ea1i: 1.89s (SLO: < 1s)",
+                "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+              },
+              "state": "pending",
+              "activeAt": "2026-11-25T10:41:07.401817116Z",
+              "value": "1.8901898734177216e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000687949,
+          "lastEvaluation": "2026-11-25T10:41:27.404140246Z",
+          "type": "alerting"
+        },
+        {
+          "state": "inactive",
+          "name": "AgentInstanceDown",
+          "query": "up{job=\"agent\"} == 0",
+          "duration": 30,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Prometheus kh\u00f4ng g\u1ecdi \u0111\u01b0\u1ee3c /metrics c\u1ee7a {{ $labels.instance }} trong 30s",
+            "summary": "Instance agent {{ $labels.instance }} kh\u00f4ng scrape \u0111\u01b0\u1ee3c"
+          },
+          "alerts": [],
+          "health": "ok",
+          "evaluationTime": 0.000154525,
+          "lastEvaluation": "2026-11-25T10:41:27.404836991Z",
+          "type": "alerting"
+        }
+      ]
+    },
+    {
+      "checked_at_utc": "2026-11-25T10:41:36.266309+00:00",
+      "rules": [
+        {
+          "state": "firing",
+          "name": "LLMCostBurnRateHigh",
+          "query": "sum(rate(llm_cost_usd_total{job=\"agent\"}[5m])) * 3600 > 2",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: ${{ $value | printf \"%.2f\" }}/gi\u1edd",
+            "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "LLMCostBurnRateHigh",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: $4.03/gi\u1edd",
+                "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+              },
+              "state": "firing",
+              "activeAt": "2026-11-25T10:34:17.571501534Z",
+              "value": "4.02687332306484e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000776328,
+          "lastEvaluation": "2026-11-25T10:41:32.572341189Z",
+          "type": "alerting"
+        },
+        {
+          "state": "pending",
+          "name": "AgentHighErrorRate",
+          "query": "sum(rate(http_requests_total{job=\"agent\",route=\"/ask\",status=~\"5..\"}[1m])) / sum(rate(http_requests_total{job=\"agent\",route=\"/ask\"}[1m])) > 0.05",
+          "duration": 60,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Error rate hi\u1ec7n t\u1ea1i: {{ $value | humanizePercentage }} (SLO: < 5%)",
+            "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighErrorRate",
+                "severity": "critical"
+              },
+              "annotations": {
+                "description": "Error rate hi\u1ec7n t\u1ea1i: 21.6% (SLO: < 5%)",
+                "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+              },
+              "state": "pending",
+              "activeAt": "2026-11-25T10:41:07.401817116Z",
+              "value": "2.1596244131455403e-01"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.001067312,
+          "lastEvaluation": "2026-11-25T10:41:32.403058022Z",
+          "type": "alerting"
+        },
+        {
+          "state": "pending",
+          "name": "AgentHighLatencyP95",
+          "query": "histogram_quantile(0.95, sum by (le) (rate(http_request_duration_seconds_bucket{job=\"agent\",route=\"/ask\"}[1m]))) > 1",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "p95 hi\u1ec7n t\u1ea1i: {{ $value | humanizeDuration }} (SLO: < 1s)",
+            "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighLatencyP95",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "p95 hi\u1ec7n t\u1ea1i: 1.891s (SLO: < 1s)",
+                "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+              },
+              "state": "pending",
+              "activeAt": "2026-11-25T10:41:07.401817116Z",
+              "value": "1.8913265306122449e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.00079874,
+          "lastEvaluation": "2026-11-25T10:41:32.404146831Z",
+          "type": "alerting"
+        },
+        {
+          "state": "inactive",
+          "name": "AgentInstanceDown",
+          "query": "up{job=\"agent\"} == 0",
+          "duration": 30,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Prometheus kh\u00f4ng g\u1ecdi \u0111\u01b0\u1ee3c /metrics c\u1ee7a {{ $labels.instance }} trong 30s",
+            "summary": "Instance agent {{ $labels.instance }} kh\u00f4ng scrape \u0111\u01b0\u1ee3c"
+          },
+          "alerts": [],
+          "health": "ok",
+          "evaluationTime": 0.00012569,
+          "lastEvaluation": "2026-11-25T10:41:32.404956712Z",
+          "type": "alerting"
+        }
+      ]
+    },
+    {
+      "checked_at_utc": "2026-11-25T10:41:41.286836+00:00",
+      "rules": [
+        {
+          "state": "firing",
+          "name": "LLMCostBurnRateHigh",
+          "query": "sum(rate(llm_cost_usd_total{job=\"agent\"}[5m])) * 3600 > 2",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: ${{ $value | printf \"%.2f\" }}/gi\u1edd",
+            "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "LLMCostBurnRateHigh",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: $3.91/gi\u1edd",
+                "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+              },
+              "state": "firing",
+              "activeAt": "2026-11-25T10:34:17.571501534Z",
+              "value": "3.9125774858027107e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000800675,
+          "lastEvaluation": "2026-11-25T10:41:37.57212362Z",
+          "type": "alerting"
+        },
+        {
+          "state": "pending",
+          "name": "AgentHighErrorRate",
+          "query": "sum(rate(http_requests_total{job=\"agent\",route=\"/ask\",status=~\"5..\"}[1m])) / sum(rate(http_requests_total{job=\"agent\",route=\"/ask\"}[1m])) > 0.05",
+          "duration": 60,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Error rate hi\u1ec7n t\u1ea1i: {{ $value | humanizePercentage }} (SLO: < 5%)",
+            "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighErrorRate",
+                "severity": "critical"
+              },
+              "annotations": {
+                "description": "Error rate hi\u1ec7n t\u1ea1i: 21.21% (SLO: < 5%)",
+                "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+              },
+              "state": "pending",
+              "activeAt": "2026-11-25T10:41:07.401817116Z",
+              "value": "2.121212121212121e-01"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.001023809,
+          "lastEvaluation": "2026-11-25T10:41:37.403749778Z",
+          "type": "alerting"
+        },
+        {
+          "state": "pending",
+          "name": "AgentHighLatencyP95",
+          "query": "histogram_quantile(0.95, sum by (le) (rate(http_request_duration_seconds_bucket{job=\"agent\",route=\"/ask\"}[1m]))) > 1",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "p95 hi\u1ec7n t\u1ea1i: {{ $value | humanizeDuration }} (SLO: < 1s)",
+            "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighLatencyP95",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "p95 hi\u1ec7n t\u1ea1i: 1.895s (SLO: < 1s)",
+                "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+              },
+              "state": "pending",
+              "activeAt": "2026-11-25T10:41:07.401817116Z",
+              "value": "1.8951271186440675e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000702127,
+          "lastEvaluation": "2026-11-25T10:41:37.404789532Z",
+          "type": "alerting"
+        },
+        {
+          "state": "inactive",
+          "name": "AgentInstanceDown",
+          "query": "up{job=\"agent\"} == 0",
+          "duration": 30,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Prometheus kh\u00f4ng g\u1ecdi \u0111\u01b0\u1ee3c /metrics c\u1ee7a {{ $labels.instance }} trong 30s",
+            "summary": "Instance agent {{ $labels.instance }} kh\u00f4ng scrape \u0111\u01b0\u1ee3c"
+          },
+          "alerts": [],
+          "health": "ok",
+          "evaluationTime": 0.00013594,
+          "lastEvaluation": "2026-11-25T10:41:37.405502684Z",
+          "type": "alerting"
+        }
+      ]
+    },
+    {
+      "checked_at_utc": "2026-11-25T10:41:46.308290+00:00",
+      "rules": [
+        {
+          "state": "firing",
+          "name": "LLMCostBurnRateHigh",
+          "query": "sum(rate(llm_cost_usd_total{job=\"agent\"}[5m])) * 3600 > 2",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: ${{ $value | printf \"%.2f\" }}/gi\u1edd",
+            "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "LLMCostBurnRateHigh",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: $3.82/gi\u1edd",
+                "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+              },
+              "state": "firing",
+              "activeAt": "2026-11-25T10:34:17.571501534Z",
+              "value": "3.8173281971345983e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.00058343,
+          "lastEvaluation": "2026-11-25T10:41:42.57207115Z",
+          "type": "alerting"
+        },
+        {
+          "state": "pending",
+          "name": "AgentHighErrorRate",
+          "query": "sum(rate(http_requests_total{job=\"agent\",route=\"/ask\",status=~\"5..\"}[1m])) / sum(rate(http_requests_total{job=\"agent\",route=\"/ask\"}[1m])) > 0.05",
+          "duration": 60,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Error rate hi\u1ec7n t\u1ea1i: {{ $value | humanizePercentage }} (SLO: < 5%)",
+            "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighErrorRate",
+                "severity": "critical"
+              },
+              "annotations": {
+                "description": "Error rate hi\u1ec7n t\u1ea1i: 21.09% (SLO: < 5%)",
+                "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+              },
+              "state": "pending",
+              "activeAt": "2026-11-25T10:41:07.401817116Z",
+              "value": "2.10896309314587e-01"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.001514301,
+          "lastEvaluation": "2026-11-25T10:41:42.403261531Z",
+          "type": "alerting"
+        },
+        {
+          "state": "pending",
+          "name": "AgentHighLatencyP95",
+          "query": "histogram_quantile(0.95, sum by (le) (rate(http_request_duration_seconds_bucket{job=\"agent\",route=\"/ask\"}[1m]))) > 1",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "p95 hi\u1ec7n t\u1ea1i: {{ $value | humanizeDuration }} (SLO: < 1s)",
+            "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighLatencyP95",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "p95 hi\u1ec7n t\u1ea1i: 1.898s (SLO: < 1s)",
+                "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+              },
+              "state": "pending",
+              "activeAt": "2026-11-25T10:41:07.401817116Z",
+              "value": "1.897661870503597e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.001698489,
+          "lastEvaluation": "2026-11-25T10:41:42.40482211Z",
+          "type": "alerting"
+        },
+        {
+          "state": "inactive",
+          "name": "AgentInstanceDown",
+          "query": "up{job=\"agent\"} == 0",
+          "duration": 30,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Prometheus kh\u00f4ng g\u1ecdi \u0111\u01b0\u1ee3c /metrics c\u1ee7a {{ $labels.instance }} trong 30s",
+            "summary": "Instance agent {{ $labels.instance }} kh\u00f4ng scrape \u0111\u01b0\u1ee3c"
+          },
+          "alerts": [],
+          "health": "ok",
+          "evaluationTime": 0.000217887,
+          "lastEvaluation": "2026-11-25T10:41:42.406637086Z",
+          "type": "alerting"
+        }
+      ]
+    },
+    {
+      "checked_at_utc": "2026-11-25T10:41:51.328494+00:00",
+      "rules": [
+        {
+          "state": "firing",
+          "name": "LLMCostBurnRateHigh",
+          "query": "sum(rate(llm_cost_usd_total{job=\"agent\"}[5m])) * 3600 > 2",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: ${{ $value | printf \"%.2f\" }}/gi\u1edd",
+            "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "LLMCostBurnRateHigh",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: $3.71/gi\u1edd",
+                "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+              },
+              "state": "firing",
+              "activeAt": "2026-11-25T10:34:17.571501534Z",
+              "value": "3.7098084854600306e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000788201,
+          "lastEvaluation": "2026-11-25T10:41:47.571890093Z",
+          "type": "alerting"
+        },
+        {
+          "state": "pending",
+          "name": "AgentHighErrorRate",
+          "query": "sum(rate(http_requests_total{job=\"agent\",route=\"/ask\",status=~\"5..\"}[1m])) / sum(rate(http_requests_total{job=\"agent\",route=\"/ask\"}[1m])) > 0.05",
+          "duration": 60,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Error rate hi\u1ec7n t\u1ea1i: {{ $value | humanizePercentage }} (SLO: < 5%)",
+            "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighErrorRate",
+                "severity": "critical"
+              },
+              "annotations": {
+                "description": "Error rate hi\u1ec7n t\u1ea1i: 20.57% (SLO: < 5%)",
+                "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+              },
+              "state": "pending",
+              "activeAt": "2026-11-25T10:41:07.401817116Z",
+              "value": "2.0569070008440546e-01"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000945096,
+          "lastEvaluation": "2026-11-25T10:41:47.404092013Z",
+          "type": "alerting"
+        },
+        {
+          "state": "pending",
+          "name": "AgentHighLatencyP95",
+          "query": "histogram_quantile(0.95, sum by (le) (rate(http_request_duration_seconds_bucket{job=\"agent\",route=\"/ask\"}[1m]))) > 1",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "p95 hi\u1ec7n t\u1ea1i: {{ $value | humanizeDuration }} (SLO: < 1s)",
+            "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighLatencyP95",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "p95 hi\u1ec7n t\u1ea1i: 1.898s (SLO: < 1s)",
+                "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+              },
+              "state": "pending",
+              "activeAt": "2026-11-25T10:41:07.401817116Z",
+              "value": "1.8977501339546607e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000750463,
+          "lastEvaluation": "2026-11-25T10:41:47.405052806Z",
+          "type": "alerting"
+        },
+        {
+          "state": "inactive",
+          "name": "AgentInstanceDown",
+          "query": "up{job=\"agent\"} == 0",
+          "duration": 30,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Prometheus kh\u00f4ng g\u1ecdi \u0111\u01b0\u1ee3c /metrics c\u1ee7a {{ $labels.instance }} trong 30s",
+            "summary": "Instance agent {{ $labels.instance }} kh\u00f4ng scrape \u0111\u01b0\u1ee3c"
+          },
+          "alerts": [],
+          "health": "ok",
+          "evaluationTime": 0.000141768,
+          "lastEvaluation": "2026-11-25T10:41:47.405815048Z",
+          "type": "alerting"
+        }
+      ]
+    },
+    {
+      "checked_at_utc": "2026-11-25T10:41:56.348474+00:00",
+      "rules": [
+        {
+          "state": "firing",
+          "name": "LLMCostBurnRateHigh",
+          "query": "sum(rate(llm_cost_usd_total{job=\"agent\"}[5m])) * 3600 > 2",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: ${{ $value | printf \"%.2f\" }}/gi\u1edd",
+            "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "LLMCostBurnRateHigh",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: $3.60/gi\u1edd",
+                "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+              },
+              "state": "firing",
+              "activeAt": "2026-11-25T10:34:17.571501534Z",
+              "value": "3.601519353845149e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000882077,
+          "lastEvaluation": "2026-11-25T10:41:52.572498906Z",
+          "type": "alerting"
+        },
+        {
+          "state": "pending",
+          "name": "AgentHighErrorRate",
+          "query": "sum(rate(http_requests_total{job=\"agent\",route=\"/ask\",status=~\"5..\"}[1m])) / sum(rate(http_requests_total{job=\"agent\",route=\"/ask\"}[1m])) > 0.05",
+          "duration": 60,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Error rate hi\u1ec7n t\u1ea1i: {{ $value | humanizePercentage }} (SLO: < 5%)",
+            "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighErrorRate",
+                "severity": "critical"
+              },
+              "annotations": {
+                "description": "Error rate hi\u1ec7n t\u1ea1i: 21% (SLO: < 5%)",
+                "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+              },
+              "state": "pending",
+              "activeAt": "2026-11-25T10:41:07.401817116Z",
+              "value": "2.0997533896632656e-01"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.001428084,
+          "lastEvaluation": "2026-11-25T10:41:52.403725576Z",
+          "type": "alerting"
+        },
+        {
+          "state": "pending",
+          "name": "AgentHighLatencyP95",
+          "query": "histogram_quantile(0.95, sum by (le) (rate(http_request_duration_seconds_bucket{job=\"agent\",route=\"/ask\"}[1m]))) > 1",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "p95 hi\u1ec7n t\u1ea1i: {{ $value | humanizeDuration }} (SLO: < 1s)",
+            "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighLatencyP95",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "p95 hi\u1ec7n t\u1ea1i: 1.894s (SLO: < 1s)",
+                "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+              },
+              "state": "pending",
+              "activeAt": "2026-11-25T10:41:07.401817116Z",
+              "value": "1.894219205034823e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000746005,
+          "lastEvaluation": "2026-11-25T10:41:52.405243055Z",
+          "type": "alerting"
+        },
+        {
+          "state": "inactive",
+          "name": "AgentInstanceDown",
+          "query": "up{job=\"agent\"} == 0",
+          "duration": 30,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Prometheus kh\u00f4ng g\u1ecdi \u0111\u01b0\u1ee3c /metrics c\u1ee7a {{ $labels.instance }} trong 30s",
+            "summary": "Instance agent {{ $labels.instance }} kh\u00f4ng scrape \u0111\u01b0\u1ee3c"
+          },
+          "alerts": [],
+          "health": "ok",
+          "evaluationTime": 0.000133435,
+          "lastEvaluation": "2026-11-25T10:41:52.406000773Z",
+          "type": "alerting"
+        }
+      ]
+    },
+    {
+      "checked_at_utc": "2026-11-25T10:42:01.361858+00:00",
+      "rules": [
+        {
+          "state": "firing",
+          "name": "LLMCostBurnRateHigh",
+          "query": "sum(rate(llm_cost_usd_total{job=\"agent\"}[5m])) * 3600 > 2",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: ${{ $value | printf \"%.2f\" }}/gi\u1edd",
+            "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "LLMCostBurnRateHigh",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: $3.50/gi\u1edd",
+                "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+              },
+              "state": "firing",
+              "activeAt": "2026-11-25T10:34:17.571501534Z",
+              "value": "3.5021513872118972e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.00075396,
+          "lastEvaluation": "2026-11-25T10:41:57.572369339Z",
+          "type": "alerting"
+        },
+        {
+          "state": "pending",
+          "name": "AgentHighErrorRate",
+          "query": "sum(rate(http_requests_total{job=\"agent\",route=\"/ask\",status=~\"5..\"}[1m])) / sum(rate(http_requests_total{job=\"agent\",route=\"/ask\"}[1m])) > 0.05",
+          "duration": 60,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Error rate hi\u1ec7n t\u1ea1i: {{ $value | humanizePercentage }} (SLO: < 5%)",
+            "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighErrorRate",
+                "severity": "critical"
+              },
+              "annotations": {
+                "description": "Error rate hi\u1ec7n t\u1ea1i: 20.74% (SLO: < 5%)",
+                "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+              },
+              "state": "pending",
+              "activeAt": "2026-11-25T10:41:07.401817116Z",
+              "value": "2.0735140773943697e-01"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000904061,
+          "lastEvaluation": "2026-11-25T10:41:57.403178102Z",
+          "type": "alerting"
+        },
+        {
+          "state": "pending",
+          "name": "AgentHighLatencyP95",
+          "query": "histogram_quantile(0.95, sum by (le) (rate(http_request_duration_seconds_bucket{job=\"agent\",route=\"/ask\"}[1m]))) > 1",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "p95 hi\u1ec7n t\u1ea1i: {{ $value | humanizeDuration }} (SLO: < 1s)",
+            "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighLatencyP95",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "p95 hi\u1ec7n t\u1ea1i: 1.896s (SLO: < 1s)",
+                "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+              },
+              "state": "pending",
+              "activeAt": "2026-11-25T10:41:07.401817116Z",
+              "value": "1.895835116787493e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000642369,
+          "lastEvaluation": "2026-11-25T10:41:57.404097207Z",
+          "type": "alerting"
+        },
+        {
+          "state": "inactive",
+          "name": "AgentInstanceDown",
+          "query": "up{job=\"agent\"} == 0",
+          "duration": 30,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Prometheus kh\u00f4ng g\u1ecdi \u0111\u01b0\u1ee3c /metrics c\u1ee7a {{ $labels.instance }} trong 30s",
+            "summary": "Instance agent {{ $labels.instance }} kh\u00f4ng scrape \u0111\u01b0\u1ee3c"
+          },
+          "alerts": [],
+          "health": "ok",
+          "evaluationTime": 0.000114483,
+          "lastEvaluation": "2026-11-25T10:41:57.404749533Z",
+          "type": "alerting"
+        }
+      ]
+    },
+    {
+      "checked_at_utc": "2026-11-25T10:42:06.373252+00:00",
+      "rules": [
+        {
+          "state": "firing",
+          "name": "LLMCostBurnRateHigh",
+          "query": "sum(rate(llm_cost_usd_total{job=\"agent\"}[5m])) * 3600 > 2",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: ${{ $value | printf \"%.2f\" }}/gi\u1edd",
+            "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "LLMCostBurnRateHigh",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: $3.40/gi\u1edd",
+                "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+              },
+              "state": "firing",
+              "activeAt": "2026-11-25T10:34:17.571501534Z",
+              "value": "3.395138970300327e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000724475,
+          "lastEvaluation": "2026-11-25T10:42:02.57264609Z",
+          "type": "alerting"
+        },
+        {
+          "state": "pending",
+          "name": "AgentHighErrorRate",
+          "query": "sum(rate(http_requests_total{job=\"agent\",route=\"/ask\",status=~\"5..\"}[1m])) / sum(rate(http_requests_total{job=\"agent\",route=\"/ask\"}[1m])) > 0.05",
+          "duration": 60,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Error rate hi\u1ec7n t\u1ea1i: {{ $value | humanizePercentage }} (SLO: < 5%)",
+            "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighErrorRate",
+                "severity": "critical"
+              },
+              "annotations": {
+                "description": "Error rate hi\u1ec7n t\u1ea1i: 20% (SLO: < 5%)",
+                "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+              },
+              "state": "pending",
+              "activeAt": "2026-11-25T10:41:07.401817116Z",
+              "value": "2.000203923229246e-01"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000946333,
+          "lastEvaluation": "2026-11-25T10:42:02.403644451Z",
+          "type": "alerting"
+        },
+        {
+          "state": "pending",
+          "name": "AgentHighLatencyP95",
+          "query": "histogram_quantile(0.95, sum by (le) (rate(http_request_duration_seconds_bucket{job=\"agent\",route=\"/ask\"}[1m]))) > 1",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "p95 hi\u1ec7n t\u1ea1i: {{ $value | humanizeDuration }} (SLO: < 1s)",
+            "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighLatencyP95",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "p95 hi\u1ec7n t\u1ea1i: 1.899s (SLO: < 1s)",
+                "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+              },
+              "state": "pending",
+              "activeAt": "2026-11-25T10:41:07.401817116Z",
+              "value": "1.8993213332465333e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000501719,
+          "lastEvaluation": "2026-11-25T10:42:02.404613021Z",
+          "type": "alerting"
+        },
+        {
+          "state": "inactive",
+          "name": "AgentInstanceDown",
+          "query": "up{job=\"agent\"} == 0",
+          "duration": 30,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Prometheus kh\u00f4ng g\u1ecdi \u0111\u01b0\u1ee3c /metrics c\u1ee7a {{ $labels.instance }} trong 30s",
+            "summary": "Instance agent {{ $labels.instance }} kh\u00f4ng scrape \u0111\u01b0\u1ee3c"
+          },
+          "alerts": [],
+          "health": "ok",
+          "evaluationTime": 5.5847e-05,
+          "lastEvaluation": "2026-11-25T10:42:02.405118874Z",
+          "type": "alerting"
+        }
+      ]
+    },
+    {
+      "checked_at_utc": "2026-11-25T10:42:11.395698+00:00",
+      "rules": [
+        {
+          "state": "firing",
+          "name": "LLMCostBurnRateHigh",
+          "query": "sum(rate(llm_cost_usd_total{job=\"agent\"}[5m])) * 3600 > 2",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: ${{ $value | printf \"%.2f\" }}/gi\u1edd",
+            "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "LLMCostBurnRateHigh",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: $3.42/gi\u1edd",
+                "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+              },
+              "state": "firing",
+              "activeAt": "2026-11-25T10:34:17.571501534Z",
+              "value": "3.4176248443343304e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000575575,
+          "lastEvaluation": "2026-11-25T10:42:07.572418338Z",
+          "type": "alerting"
+        },
+        {
+          "state": "firing",
+          "name": "AgentHighErrorRate",
+          "query": "sum(rate(http_requests_total{job=\"agent\",route=\"/ask\",status=~\"5..\"}[1m])) / sum(rate(http_requests_total{job=\"agent\",route=\"/ask\"}[1m])) > 0.05",
+          "duration": 60,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Error rate hi\u1ec7n t\u1ea1i: {{ $value | humanizePercentage }} (SLO: < 5%)",
+            "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighErrorRate",
+                "severity": "critical"
+              },
+              "annotations": {
+                "description": "Error rate hi\u1ec7n t\u1ea1i: 18.53% (SLO: < 5%)",
+                "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+              },
+              "state": "firing",
+              "activeAt": "2026-11-25T10:41:07.401817116Z",
+              "value": "1.8531889290012032e-01"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000784771,
+          "lastEvaluation": "2026-11-25T10:42:07.403311596Z",
+          "type": "alerting"
+        },
+        {
+          "state": "pending",
+          "name": "AgentHighLatencyP95",
+          "query": "histogram_quantile(0.95, sum by (le) (rate(http_request_duration_seconds_bucket{job=\"agent\",route=\"/ask\"}[1m]))) > 1",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "p95 hi\u1ec7n t\u1ea1i: {{ $value | humanizeDuration }} (SLO: < 1s)",
+            "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighLatencyP95",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "p95 hi\u1ec7n t\u1ea1i: 1.903s (SLO: < 1s)",
+                "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+              },
+              "state": "pending",
+              "activeAt": "2026-11-25T10:41:07.401817116Z",
+              "value": "1.9033720930232558e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000401192,
+          "lastEvaluation": "2026-11-25T10:42:07.404108787Z",
+          "type": "alerting"
+        },
+        {
+          "state": "inactive",
+          "name": "AgentInstanceDown",
+          "query": "up{job=\"agent\"} == 0",
+          "duration": 30,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Prometheus kh\u00f4ng g\u1ecdi \u0111\u01b0\u1ee3c /metrics c\u1ee7a {{ $labels.instance }} trong 30s",
+            "summary": "Instance agent {{ $labels.instance }} kh\u00f4ng scrape \u0111\u01b0\u1ee3c"
+          },
+          "alerts": [],
+          "health": "ok",
+          "evaluationTime": 0.000156406,
+          "lastEvaluation": "2026-11-25T10:42:07.404514572Z",
+          "type": "alerting"
+        }
+      ]
+    },
+    {
+      "checked_at_utc": "2026-11-25T10:42:16.415453+00:00",
+      "rules": [
+        {
+          "state": "firing",
+          "name": "LLMCostBurnRateHigh",
+          "query": "sum(rate(llm_cost_usd_total{job=\"agent\"}[5m])) * 3600 > 2",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: ${{ $value | printf \"%.2f\" }}/gi\u1edd",
+            "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "LLMCostBurnRateHigh",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: $3.45/gi\u1edd",
+                "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+              },
+              "state": "firing",
+              "activeAt": "2026-11-25T10:34:17.571501534Z",
+              "value": "3.4451943846854416e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000741977,
+          "lastEvaluation": "2026-11-25T10:42:12.572492367Z",
+          "type": "alerting"
+        },
+        {
+          "state": "firing",
+          "name": "AgentHighErrorRate",
+          "query": "sum(rate(http_requests_total{job=\"agent\",route=\"/ask\",status=~\"5..\"}[1m])) / sum(rate(http_requests_total{job=\"agent\",route=\"/ask\"}[1m])) > 0.05",
+          "duration": 60,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Error rate hi\u1ec7n t\u1ea1i: {{ $value | humanizePercentage }} (SLO: < 5%)",
+            "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighErrorRate",
+                "severity": "critical"
+              },
+              "annotations": {
+                "description": "Error rate hi\u1ec7n t\u1ea1i: 18.42% (SLO: < 5%)",
+                "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+              },
+              "state": "firing",
+              "activeAt": "2026-11-25T10:41:07.401817116Z",
+              "value": "1.8421052631578946e-01"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000858124,
+          "lastEvaluation": "2026-11-25T10:42:12.403875731Z",
+          "type": "alerting"
+        },
+        {
+          "state": "pending",
+          "name": "AgentHighLatencyP95",
+          "query": "histogram_quantile(0.95, sum by (le) (rate(http_request_duration_seconds_bucket{job=\"agent\",route=\"/ask\"}[1m]))) > 1",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "p95 hi\u1ec7n t\u1ea1i: {{ $value | humanizeDuration }} (SLO: < 1s)",
+            "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighLatencyP95",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "p95 hi\u1ec7n t\u1ea1i: 1.902s (SLO: < 1s)",
+                "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+              },
+              "state": "pending",
+              "activeAt": "2026-11-25T10:41:07.401817116Z",
+              "value": "1.9018779342723005e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000611534,
+          "lastEvaluation": "2026-11-25T10:42:12.404748566Z",
+          "type": "alerting"
+        },
+        {
+          "state": "inactive",
+          "name": "AgentInstanceDown",
+          "query": "up{job=\"agent\"} == 0",
+          "duration": 30,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Prometheus kh\u00f4ng g\u1ecdi \u0111\u01b0\u1ee3c /metrics c\u1ee7a {{ $labels.instance }} trong 30s",
+            "summary": "Instance agent {{ $labels.instance }} kh\u00f4ng scrape \u0111\u01b0\u1ee3c"
+          },
+          "alerts": [],
+          "health": "ok",
+          "evaluationTime": 0.000554408,
+          "lastEvaluation": "2026-11-25T10:42:12.405367753Z",
+          "type": "alerting"
+        }
+      ]
+    },
+    {
+      "checked_at_utc": "2026-11-25T10:42:21.426962+00:00",
+      "rules": [
+        {
+          "state": "firing",
+          "name": "LLMCostBurnRateHigh",
+          "query": "sum(rate(llm_cost_usd_total{job=\"agent\"}[5m])) * 3600 > 2",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: ${{ $value | printf \"%.2f\" }}/gi\u1edd",
+            "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "LLMCostBurnRateHigh",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: $3.47/gi\u1edd",
+                "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+              },
+              "state": "firing",
+              "activeAt": "2026-11-25T10:34:17.571501534Z",
+              "value": "3.473276624131586e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.00073005,
+          "lastEvaluation": "2026-11-25T10:42:17.57260735Z",
+          "type": "alerting"
+        },
+        {
+          "state": "firing",
+          "name": "AgentHighErrorRate",
+          "query": "sum(rate(http_requests_total{job=\"agent\",route=\"/ask\",status=~\"5..\"}[1m])) / sum(rate(http_requests_total{job=\"agent\",route=\"/ask\"}[1m])) > 0.05",
+          "duration": 60,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Error rate hi\u1ec7n t\u1ea1i: {{ $value | humanizePercentage }} (SLO: < 5%)",
+            "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighErrorRate",
+                "severity": "critical"
+              },
+              "annotations": {
+                "description": "Error rate hi\u1ec7n t\u1ea1i: 18.08% (SLO: < 5%)",
+                "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+              },
+              "state": "firing",
+              "activeAt": "2026-11-25T10:41:07.401817116Z",
+              "value": "1.808383233532934e-01"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000615025,
+          "lastEvaluation": "2026-11-25T10:42:17.404012547Z",
+          "type": "alerting"
+        },
+        {
+          "state": "pending",
+          "name": "AgentHighLatencyP95",
+          "query": "histogram_quantile(0.95, sum by (le) (rate(http_request_duration_seconds_bucket{job=\"agent\",route=\"/ask\"}[1m]))) > 1",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "p95 hi\u1ec7n t\u1ea1i: {{ $value | humanizeDuration }} (SLO: < 1s)",
+            "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighLatencyP95",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "p95 hi\u1ec7n t\u1ea1i: 1.901s (SLO: < 1s)",
+                "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+              },
+              "state": "pending",
+              "activeAt": "2026-11-25T10:41:07.401817116Z",
+              "value": "1.900595238095238e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000416691,
+          "lastEvaluation": "2026-11-25T10:42:17.404639063Z",
+          "type": "alerting"
+        },
+        {
+          "state": "inactive",
+          "name": "AgentInstanceDown",
+          "query": "up{job=\"agent\"} == 0",
+          "duration": 30,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Prometheus kh\u00f4ng g\u1ecdi \u0111\u01b0\u1ee3c /metrics c\u1ee7a {{ $labels.instance }} trong 30s",
+            "summary": "Instance agent {{ $labels.instance }} kh\u00f4ng scrape \u0111\u01b0\u1ee3c"
+          },
+          "alerts": [],
+          "health": "ok",
+          "evaluationTime": 6.9117e-05,
+          "lastEvaluation": "2026-11-25T10:42:17.405060778Z",
+          "type": "alerting"
+        }
+      ]
+    },
+    {
+      "checked_at_utc": "2026-11-25T10:42:26.451165+00:00",
+      "rules": [
+        {
+          "state": "firing",
+          "name": "LLMCostBurnRateHigh",
+          "query": "sum(rate(llm_cost_usd_total{job=\"agent\"}[5m])) * 3600 > 2",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: ${{ $value | printf \"%.2f\" }}/gi\u1edd",
+            "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "LLMCostBurnRateHigh",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: $3.50/gi\u1edd",
+                "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+              },
+              "state": "firing",
+              "activeAt": "2026-11-25T10:34:17.571501534Z",
+              "value": "3.5020749539004443e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.001197086,
+          "lastEvaluation": "2026-11-25T10:42:22.571983438Z",
+          "type": "alerting"
+        },
+        {
+          "state": "firing",
+          "name": "AgentHighErrorRate",
+          "query": "sum(rate(http_requests_total{job=\"agent\",route=\"/ask\",status=~\"5..\"}[1m])) / sum(rate(http_requests_total{job=\"agent\",route=\"/ask\"}[1m])) > 0.05",
+          "duration": 60,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Error rate hi\u1ec7n t\u1ea1i: {{ $value | humanizePercentage }} (SLO: < 5%)",
+            "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighErrorRate",
+                "severity": "critical"
+              },
+              "annotations": {
+                "description": "Error rate hi\u1ec7n t\u1ea1i: 18.09% (SLO: < 5%)",
+                "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+              },
+              "state": "firing",
+              "activeAt": "2026-11-25T10:41:07.401817116Z",
+              "value": "1.8085106382978725e-01"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000926721,
+          "lastEvaluation": "2026-11-25T10:42:22.403726676Z",
+          "type": "alerting"
+        },
+        {
+          "state": "pending",
+          "name": "AgentHighLatencyP95",
+          "query": "histogram_quantile(0.95, sum by (le) (rate(http_request_duration_seconds_bucket{job=\"agent\",route=\"/ask\"}[1m]))) > 1",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "p95 hi\u1ec7n t\u1ea1i: {{ $value | humanizeDuration }} (SLO: < 1s)",
+            "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighLatencyP95",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "p95 hi\u1ec7n t\u1ea1i: 1.897s (SLO: < 1s)",
+                "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+              },
+              "state": "pending",
+              "activeAt": "2026-11-25T10:41:07.401817116Z",
+              "value": "1.8973300970873785e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000655221,
+          "lastEvaluation": "2026-11-25T10:42:22.404666124Z",
+          "type": "alerting"
+        },
+        {
+          "state": "inactive",
+          "name": "AgentInstanceDown",
+          "query": "up{job=\"agent\"} == 0",
+          "duration": 30,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Prometheus kh\u00f4ng g\u1ecdi \u0111\u01b0\u1ee3c /metrics c\u1ee7a {{ $labels.instance }} trong 30s",
+            "summary": "Instance agent {{ $labels.instance }} kh\u00f4ng scrape \u0111\u01b0\u1ee3c"
+          },
+          "alerts": [],
+          "health": "ok",
+          "evaluationTime": 0.000105644,
+          "lastEvaluation": "2026-11-25T10:42:22.405329087Z",
+          "type": "alerting"
+        }
+      ]
+    },
+    {
+      "checked_at_utc": "2026-11-25T10:42:31.464195+00:00",
+      "rules": [
+        {
+          "state": "firing",
+          "name": "LLMCostBurnRateHigh",
+          "query": "sum(rate(llm_cost_usd_total{job=\"agent\"}[5m])) * 3600 > 2",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: ${{ $value | printf \"%.2f\" }}/gi\u1edd",
+            "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "LLMCostBurnRateHigh",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: $3.53/gi\u1edd",
+                "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+              },
+              "state": "firing",
+              "activeAt": "2026-11-25T10:34:17.571501534Z",
+              "value": "3.530461062450921e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000565087,
+          "lastEvaluation": "2026-11-25T10:42:27.572100043Z",
+          "type": "alerting"
+        },
+        {
+          "state": "firing",
+          "name": "AgentHighErrorRate",
+          "query": "sum(rate(http_requests_total{job=\"agent\",route=\"/ask\",status=~\"5..\"}[1m])) / sum(rate(http_requests_total{job=\"agent\",route=\"/ask\"}[1m])) > 0.05",
+          "duration": 60,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Error rate hi\u1ec7n t\u1ea1i: {{ $value | humanizePercentage }} (SLO: < 5%)",
+            "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighErrorRate",
+                "severity": "critical"
+              },
+              "annotations": {
+                "description": "Error rate hi\u1ec7n t\u1ea1i: 18.31% (SLO: < 5%)",
+                "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+              },
+              "state": "firing",
+              "activeAt": "2026-11-25T10:41:07.401817116Z",
+              "value": "1.8309859154929575e-01"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.001772415,
+          "lastEvaluation": "2026-11-25T10:42:27.403631216Z",
+          "type": "alerting"
+        },
+        {
+          "state": "pending",
+          "name": "AgentHighLatencyP95",
+          "query": "histogram_quantile(0.95, sum by (le) (rate(http_request_duration_seconds_bucket{job=\"agent\",route=\"/ask\"}[1m]))) > 1",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "p95 hi\u1ec7n t\u1ea1i: {{ $value | humanizeDuration }} (SLO: < 1s)",
+            "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighLatencyP95",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "p95 hi\u1ec7n t\u1ea1i: 1.898s (SLO: < 1s)",
+                "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+              },
+              "state": "pending",
+              "activeAt": "2026-11-25T10:41:07.401817116Z",
+              "value": "1.8980861244019138e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.00097057,
+          "lastEvaluation": "2026-11-25T10:42:27.405425799Z",
+          "type": "alerting"
+        },
+        {
+          "state": "inactive",
+          "name": "AgentInstanceDown",
+          "query": "up{job=\"agent\"} == 0",
+          "duration": 30,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Prometheus kh\u00f4ng g\u1ecdi \u0111\u01b0\u1ee3c /metrics c\u1ee7a {{ $labels.instance }} trong 30s",
+            "summary": "Instance agent {{ $labels.instance }} kh\u00f4ng scrape \u0111\u01b0\u1ee3c"
+          },
+          "alerts": [],
+          "health": "ok",
+          "evaluationTime": 0.000153296,
+          "lastEvaluation": "2026-11-25T10:42:27.406418368Z",
+          "type": "alerting"
+        }
+      ]
+    },
+    {
+      "checked_at_utc": "2026-11-25T10:42:36.489167+00:00",
+      "rules": [
+        {
+          "state": "firing",
+          "name": "LLMCostBurnRateHigh",
+          "query": "sum(rate(llm_cost_usd_total{job=\"agent\"}[5m])) * 3600 > 2",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: ${{ $value | printf \"%.2f\" }}/gi\u1edd",
+            "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "LLMCostBurnRateHigh",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: $3.55/gi\u1edd",
+                "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+              },
+              "state": "firing",
+              "activeAt": "2026-11-25T10:34:17.571501534Z",
+              "value": "3.5506574496011707e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000837773,
+          "lastEvaluation": "2026-11-25T10:42:32.572591234Z",
+          "type": "alerting"
+        },
+        {
+          "state": "firing",
+          "name": "AgentHighErrorRate",
+          "query": "sum(rate(http_requests_total{job=\"agent\",route=\"/ask\",status=~\"5..\"}[1m])) / sum(rate(http_requests_total{job=\"agent\",route=\"/ask\"}[1m])) > 0.05",
+          "duration": 60,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Error rate hi\u1ec7n t\u1ea1i: {{ $value | humanizePercentage }} (SLO: < 5%)",
+            "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighErrorRate",
+                "severity": "critical"
+              },
+              "annotations": {
+                "description": "Error rate hi\u1ec7n t\u1ea1i: 19.34% (SLO: < 5%)",
+                "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+              },
+              "state": "firing",
+              "activeAt": "2026-11-25T10:41:07.401817116Z",
+              "value": "1.9343493552168817e-01"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000955657,
+          "lastEvaluation": "2026-11-25T10:42:32.403791787Z",
+          "type": "alerting"
+        },
+        {
+          "state": "pending",
+          "name": "AgentHighLatencyP95",
+          "query": "histogram_quantile(0.95, sum by (le) (rate(http_request_duration_seconds_bucket{job=\"agent\",route=\"/ask\"}[1m]))) > 1",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "p95 hi\u1ec7n t\u1ea1i: {{ $value | humanizeDuration }} (SLO: < 1s)",
+            "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighLatencyP95",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "p95 hi\u1ec7n t\u1ea1i: 1.896s (SLO: < 1s)",
+                "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+              },
+              "state": "pending",
+              "activeAt": "2026-11-25T10:41:07.401817116Z",
+              "value": "1.8964805825242719e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000749328,
+          "lastEvaluation": "2026-11-25T10:42:32.404760343Z",
+          "type": "alerting"
+        },
+        {
+          "state": "inactive",
+          "name": "AgentInstanceDown",
+          "query": "up{job=\"agent\"} == 0",
+          "duration": 30,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Prometheus kh\u00f4ng g\u1ecdi \u0111\u01b0\u1ee3c /metrics c\u1ee7a {{ $labels.instance }} trong 30s",
+            "summary": "Instance agent {{ $labels.instance }} kh\u00f4ng scrape \u0111\u01b0\u1ee3c"
+          },
+          "alerts": [],
+          "health": "ok",
+          "evaluationTime": 0.000134434,
+          "lastEvaluation": "2026-11-25T10:42:32.40551944Z",
+          "type": "alerting"
+        }
+      ]
+    },
+    {
+      "checked_at_utc": "2026-11-25T10:42:41.506096+00:00",
+      "rules": [
+        {
+          "state": "firing",
+          "name": "LLMCostBurnRateHigh",
+          "query": "sum(rate(llm_cost_usd_total{job=\"agent\"}[5m])) * 3600 > 2",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: ${{ $value | printf \"%.2f\" }}/gi\u1edd",
+            "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "LLMCostBurnRateHigh",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: $3.58/gi\u1edd",
+                "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+              },
+              "state": "firing",
+              "activeAt": "2026-11-25T10:34:17.571501534Z",
+              "value": "3.576682265964728e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.001114249,
+          "lastEvaluation": "2026-11-25T10:42:37.572332468Z",
+          "type": "alerting"
+        },
+        {
+          "state": "firing",
+          "name": "AgentHighErrorRate",
+          "query": "sum(rate(http_requests_total{job=\"agent\",route=\"/ask\",status=~\"5..\"}[1m])) / sum(rate(http_requests_total{job=\"agent\",route=\"/ask\"}[1m])) > 0.05",
+          "duration": 60,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Error rate hi\u1ec7n t\u1ea1i: {{ $value | humanizePercentage }} (SLO: < 5%)",
+            "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighErrorRate",
+                "severity": "critical"
+              },
+              "annotations": {
+                "description": "Error rate hi\u1ec7n t\u1ea1i: 19.23% (SLO: < 5%)",
+                "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+              },
+              "state": "firing",
+              "activeAt": "2026-11-25T10:41:07.401817116Z",
+              "value": "1.9226260257913247e-01"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.001609176,
+          "lastEvaluation": "2026-11-25T10:42:37.403263663Z",
+          "type": "alerting"
+        },
+        {
+          "state": "pending",
+          "name": "AgentHighLatencyP95",
+          "query": "histogram_quantile(0.95, sum by (le) (rate(http_request_duration_seconds_bucket{job=\"agent\",route=\"/ask\"}[1m]))) > 1",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "p95 hi\u1ec7n t\u1ea1i: {{ $value | humanizeDuration }} (SLO: < 1s)",
+            "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighLatencyP95",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "p95 hi\u1ec7n t\u1ea1i: 1.899s (SLO: < 1s)",
+                "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+              },
+              "state": "pending",
+              "activeAt": "2026-11-25T10:41:07.401817116Z",
+              "value": "1.8989336492890996e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000917319,
+          "lastEvaluation": "2026-11-25T10:42:37.404904971Z",
+          "type": "alerting"
+        },
+        {
+          "state": "inactive",
+          "name": "AgentInstanceDown",
+          "query": "up{job=\"agent\"} == 0",
+          "duration": 30,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Prometheus kh\u00f4ng g\u1ecdi \u0111\u01b0\u1ee3c /metrics c\u1ee7a {{ $labels.instance }} trong 30s",
+            "summary": "Instance agent {{ $labels.instance }} kh\u00f4ng scrape \u0111\u01b0\u1ee3c"
+          },
+          "alerts": [],
+          "health": "ok",
+          "evaluationTime": 0.00013814,
+          "lastEvaluation": "2026-11-25T10:42:37.405832625Z",
+          "type": "alerting"
+        }
+      ]
+    },
+    {
+      "checked_at_utc": "2026-11-25T10:42:46.520504+00:00",
+      "rules": [
+        {
+          "state": "firing",
+          "name": "LLMCostBurnRateHigh",
+          "query": "sum(rate(llm_cost_usd_total{job=\"agent\"}[5m])) * 3600 > 2",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: ${{ $value | printf \"%.2f\" }}/gi\u1edd",
+            "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "LLMCostBurnRateHigh",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: $3.60/gi\u1edd",
+                "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+              },
+              "state": "firing",
+              "activeAt": "2026-11-25T10:34:17.571501534Z",
+              "value": "3.6010167705079645e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000809817,
+          "lastEvaluation": "2026-11-25T10:42:42.572896858Z",
+          "type": "alerting"
+        },
+        {
+          "state": "firing",
+          "name": "AgentHighErrorRate",
+          "query": "sum(rate(http_requests_total{job=\"agent\",route=\"/ask\",status=~\"5..\"}[1m])) / sum(rate(http_requests_total{job=\"agent\",route=\"/ask\"}[1m])) > 0.05",
+          "duration": 60,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Error rate hi\u1ec7n t\u1ea1i: {{ $value | humanizePercentage }} (SLO: < 5%)",
+            "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighErrorRate",
+                "severity": "critical"
+              },
+              "annotations": {
+                "description": "Error rate hi\u1ec7n t\u1ea1i: 18.99% (SLO: < 5%)",
+                "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+              },
+              "state": "firing",
+              "activeAt": "2026-11-25T10:41:07.401817116Z",
+              "value": "1.8985849056603776e-01"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.001021928,
+          "lastEvaluation": "2026-11-25T10:42:42.404190799Z",
+          "type": "alerting"
+        },
+        {
+          "state": "pending",
+          "name": "AgentHighLatencyP95",
+          "query": "histogram_quantile(0.95, sum by (le) (rate(http_request_duration_seconds_bucket{job=\"agent\",route=\"/ask\"}[1m]))) > 1",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "p95 hi\u1ec7n t\u1ea1i: {{ $value | humanizeDuration }} (SLO: < 1s)",
+            "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighLatencyP95",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "p95 hi\u1ec7n t\u1ea1i: 1.9s (SLO: < 1s)",
+                "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+              },
+              "state": "pending",
+              "activeAt": "2026-11-25T10:41:07.401817116Z",
+              "value": "1.900469483568075e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000680814,
+          "lastEvaluation": "2026-11-25T10:42:42.405232589Z",
+          "type": "alerting"
+        },
+        {
+          "state": "inactive",
+          "name": "AgentInstanceDown",
+          "query": "up{job=\"agent\"} == 0",
+          "duration": 30,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Prometheus kh\u00f4ng g\u1ecdi \u0111\u01b0\u1ee3c /metrics c\u1ee7a {{ $labels.instance }} trong 30s",
+            "summary": "Instance agent {{ $labels.instance }} kh\u00f4ng scrape \u0111\u01b0\u1ee3c"
+          },
+          "alerts": [],
+          "health": "ok",
+          "evaluationTime": 0.000112823,
+          "lastEvaluation": "2026-11-25T10:42:42.405922044Z",
+          "type": "alerting"
+        }
+      ]
+    },
+    {
+      "checked_at_utc": "2026-11-25T10:42:51.541000+00:00",
+      "rules": [
+        {
+          "state": "firing",
+          "name": "LLMCostBurnRateHigh",
+          "query": "sum(rate(llm_cost_usd_total{job=\"agent\"}[5m])) * 3600 > 2",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: ${{ $value | printf \"%.2f\" }}/gi\u1edd",
+            "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "LLMCostBurnRateHigh",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: $3.63/gi\u1edd",
+                "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+              },
+              "state": "firing",
+              "activeAt": "2026-11-25T10:34:17.571501534Z",
+              "value": "3.6269056623177502e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000856888,
+          "lastEvaluation": "2026-11-25T10:42:47.572893122Z",
+          "type": "alerting"
+        },
+        {
+          "state": "firing",
+          "name": "AgentHighErrorRate",
+          "query": "sum(rate(http_requests_total{job=\"agent\",route=\"/ask\",status=~\"5..\"}[1m])) / sum(rate(http_requests_total{job=\"agent\",route=\"/ask\"}[1m])) > 0.05",
+          "duration": 60,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Error rate hi\u1ec7n t\u1ea1i: {{ $value | humanizePercentage }} (SLO: < 5%)",
+            "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighErrorRate",
+                "severity": "critical"
+              },
+              "annotations": {
+                "description": "Error rate hi\u1ec7n t\u1ea1i: 18.65% (SLO: < 5%)",
+                "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+              },
+              "state": "firing",
+              "activeAt": "2026-11-25T10:41:07.401817116Z",
+              "value": "1.8654073199527746e-01"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.001023565,
+          "lastEvaluation": "2026-11-25T10:42:47.404061726Z",
+          "type": "alerting"
+        },
+        {
+          "state": "pending",
+          "name": "AgentHighLatencyP95",
+          "query": "histogram_quantile(0.95, sum by (le) (rate(http_request_duration_seconds_bucket{job=\"agent\",route=\"/ask\"}[1m]))) > 1",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "p95 hi\u1ec7n t\u1ea1i: {{ $value | humanizeDuration }} (SLO: < 1s)",
+            "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighLatencyP95",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "p95 hi\u1ec7n t\u1ea1i: 1.904s (SLO: < 1s)",
+                "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+              },
+              "state": "pending",
+              "activeAt": "2026-11-25T10:41:07.401817116Z",
+              "value": "1.9041855203619908e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000753824,
+          "lastEvaluation": "2026-11-25T10:42:47.405101997Z",
+          "type": "alerting"
+        },
+        {
+          "state": "inactive",
+          "name": "AgentInstanceDown",
+          "query": "up{job=\"agent\"} == 0",
+          "duration": 30,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Prometheus kh\u00f4ng g\u1ecdi \u0111\u01b0\u1ee3c /metrics c\u1ee7a {{ $labels.instance }} trong 30s",
+            "summary": "Instance agent {{ $labels.instance }} kh\u00f4ng scrape \u0111\u01b0\u1ee3c"
+          },
+          "alerts": [],
+          "health": "ok",
+          "evaluationTime": 0.000133633,
+          "lastEvaluation": "2026-11-25T10:42:47.405866057Z",
+          "type": "alerting"
+        }
+      ]
+    },
+    {
+      "checked_at_utc": "2026-11-25T10:42:56.570288+00:00",
+      "rules": [
+        {
+          "state": "firing",
+          "name": "LLMCostBurnRateHigh",
+          "query": "sum(rate(llm_cost_usd_total{job=\"agent\"}[5m])) * 3600 > 2",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: ${{ $value | printf \"%.2f\" }}/gi\u1edd",
+            "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "LLMCostBurnRateHigh",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: $3.65/gi\u1edd",
+                "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+              },
+              "state": "firing",
+              "activeAt": "2026-11-25T10:34:17.571501534Z",
+              "value": "3.6534285861040425e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000501502,
+          "lastEvaluation": "2026-11-25T10:42:52.572138198Z",
+          "type": "alerting"
+        },
+        {
+          "state": "firing",
+          "name": "AgentHighErrorRate",
+          "query": "sum(rate(http_requests_total{job=\"agent\",route=\"/ask\",status=~\"5..\"}[1m])) / sum(rate(http_requests_total{job=\"agent\",route=\"/ask\"}[1m])) > 0.05",
+          "duration": 60,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Error rate hi\u1ec7n t\u1ea1i: {{ $value | humanizePercentage }} (SLO: < 5%)",
+            "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighErrorRate",
+                "severity": "critical"
+              },
+              "annotations": {
+                "description": "Error rate hi\u1ec7n t\u1ea1i: 19.13% (SLO: < 5%)",
+                "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+              },
+              "state": "firing",
+              "activeAt": "2026-11-25T10:41:07.401817116Z",
+              "value": "1.912632821723731e-01"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000587338,
+          "lastEvaluation": "2026-11-25T10:42:52.403698375Z",
+          "type": "alerting"
+        },
+        {
+          "state": "pending",
+          "name": "AgentHighLatencyP95",
+          "query": "histogram_quantile(0.95, sum by (le) (rate(http_request_duration_seconds_bucket{job=\"agent\",route=\"/ask\"}[1m]))) > 1",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "p95 hi\u1ec7n t\u1ea1i: {{ $value | humanizeDuration }} (SLO: < 1s)",
+            "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighLatencyP95",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "p95 hi\u1ec7n t\u1ea1i: 1.9s (SLO: < 1s)",
+                "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+              },
+              "state": "pending",
+              "activeAt": "2026-11-25T10:41:07.401817116Z",
+              "value": "1.9001179245283017e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000372007,
+          "lastEvaluation": "2026-11-25T10:42:52.404293051Z",
+          "type": "alerting"
+        },
+        {
+          "state": "inactive",
+          "name": "AgentInstanceDown",
+          "query": "up{job=\"agent\"} == 0",
+          "duration": 30,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Prometheus kh\u00f4ng g\u1ecdi \u0111\u01b0\u1ee3c /metrics c\u1ee7a {{ $labels.instance }} trong 30s",
+            "summary": "Instance agent {{ $labels.instance }} kh\u00f4ng scrape \u0111\u01b0\u1ee3c"
+          },
+          "alerts": [],
+          "health": "ok",
+          "evaluationTime": 6.2165e-05,
+          "lastEvaluation": "2026-11-25T10:42:52.404669466Z",
+          "type": "alerting"
+        }
+      ]
+    },
+    {
+      "checked_at_utc": "2026-11-25T10:43:01.585596+00:00",
+      "rules": [
+        {
+          "state": "firing",
+          "name": "LLMCostBurnRateHigh",
+          "query": "sum(rate(llm_cost_usd_total{job=\"agent\"}[5m])) * 3600 > 2",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: ${{ $value | printf \"%.2f\" }}/gi\u1edd",
+            "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "LLMCostBurnRateHigh",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: $3.68/gi\u1edd",
+                "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+              },
+              "state": "firing",
+              "activeAt": "2026-11-25T10:34:17.571501534Z",
+              "value": "3.6809052609654622e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.00085924,
+          "lastEvaluation": "2026-11-25T10:42:57.571890506Z",
+          "type": "alerting"
+        },
+        {
+          "state": "firing",
+          "name": "AgentHighErrorRate",
+          "query": "sum(rate(http_requests_total{job=\"agent\",route=\"/ask\",status=~\"5..\"}[1m])) / sum(rate(http_requests_total{job=\"agent\",route=\"/ask\"}[1m])) > 0.05",
+          "duration": 60,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Error rate hi\u1ec7n t\u1ea1i: {{ $value | humanizePercentage }} (SLO: < 5%)",
+            "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighErrorRate",
+                "severity": "critical"
+              },
+              "annotations": {
+                "description": "Error rate hi\u1ec7n t\u1ea1i: 19.55% (SLO: < 5%)",
+                "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+              },
+              "state": "firing",
+              "activeAt": "2026-11-25T10:41:07.401817116Z",
+              "value": "1.955241460541814e-01"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.001515919,
+          "lastEvaluation": "2026-11-25T10:42:57.403318441Z",
+          "type": "alerting"
+        },
+        {
+          "state": "pending",
+          "name": "AgentHighLatencyP95",
+          "query": "histogram_quantile(0.95, sum by (le) (rate(http_request_duration_seconds_bucket{job=\"agent\",route=\"/ask\"}[1m]))) > 1",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "p95 hi\u1ec7n t\u1ea1i: {{ $value | humanizeDuration }} (SLO: < 1s)",
+            "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighLatencyP95",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "p95 hi\u1ec7n t\u1ea1i: 1.894s (SLO: < 1s)",
+                "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+              },
+              "state": "pending",
+              "activeAt": "2026-11-25T10:41:07.401817116Z",
+              "value": "1.8944029850746267e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000802595,
+          "lastEvaluation": "2026-11-25T10:42:57.404851375Z",
+          "type": "alerting"
+        },
+        {
+          "state": "inactive",
+          "name": "AgentInstanceDown",
+          "query": "up{job=\"agent\"} == 0",
+          "duration": 30,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Prometheus kh\u00f4ng g\u1ecdi \u0111\u01b0\u1ee3c /metrics c\u1ee7a {{ $labels.instance }} trong 30s",
+            "summary": "Instance agent {{ $labels.instance }} kh\u00f4ng scrape \u0111\u01b0\u1ee3c"
+          },
+          "alerts": [],
+          "health": "ok",
+          "evaluationTime": 0.000114569,
+          "lastEvaluation": "2026-11-25T10:42:57.405663219Z",
+          "type": "alerting"
+        }
+      ]
+    },
+    {
+      "checked_at_utc": "2026-11-25T10:43:06.607839+00:00",
+      "rules": [
+        {
+          "state": "firing",
+          "name": "LLMCostBurnRateHigh",
+          "query": "sum(rate(llm_cost_usd_total{job=\"agent\"}[5m])) * 3600 > 2",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: ${{ $value | printf \"%.2f\" }}/gi\u1edd",
+            "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "LLMCostBurnRateHigh",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: $3.71/gi\u1edd",
+                "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+              },
+              "state": "firing",
+              "activeAt": "2026-11-25T10:34:17.571501534Z",
+              "value": "3.706182156777082e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000709089,
+          "lastEvaluation": "2026-11-25T10:43:02.572580206Z",
+          "type": "alerting"
+        },
+        {
+          "state": "firing",
+          "name": "AgentHighErrorRate",
+          "query": "sum(rate(http_requests_total{job=\"agent\",route=\"/ask\",status=~\"5..\"}[1m])) / sum(rate(http_requests_total{job=\"agent\",route=\"/ask\"}[1m])) > 0.05",
+          "duration": 60,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Error rate hi\u1ec7n t\u1ea1i: {{ $value | humanizePercentage }} (SLO: < 5%)",
+            "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighErrorRate",
+                "severity": "critical"
+              },
+              "annotations": {
+                "description": "Error rate hi\u1ec7n t\u1ea1i: 20.14% (SLO: < 5%)",
+                "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+              },
+              "state": "firing",
+              "activeAt": "2026-11-25T10:41:07.401817116Z",
+              "value": "2.0141342756183744e-01"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000542306,
+          "lastEvaluation": "2026-11-25T10:43:02.403193874Z",
+          "type": "alerting"
+        },
+        {
+          "state": "pending",
+          "name": "AgentHighLatencyP95",
+          "query": "histogram_quantile(0.95, sum by (le) (rate(http_request_duration_seconds_bucket{job=\"agent\",route=\"/ask\"}[1m]))) > 1",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "p95 hi\u1ec7n t\u1ea1i: {{ $value | humanizeDuration }} (SLO: < 1s)",
+            "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighLatencyP95",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "p95 hi\u1ec7n t\u1ea1i: 1.891s (SLO: < 1s)",
+                "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+              },
+              "state": "pending",
+              "activeAt": "2026-11-25T10:41:07.401817116Z",
+              "value": "1.891153846153846e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000320197,
+          "lastEvaluation": "2026-11-25T10:43:02.403744035Z",
+          "type": "alerting"
+        },
+        {
+          "state": "inactive",
+          "name": "AgentInstanceDown",
+          "query": "up{job=\"agent\"} == 0",
+          "duration": 30,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Prometheus kh\u00f4ng g\u1ecdi \u0111\u01b0\u1ee3c /metrics c\u1ee7a {{ $labels.instance }} trong 30s",
+            "summary": "Instance agent {{ $labels.instance }} kh\u00f4ng scrape \u0111\u01b0\u1ee3c"
+          },
+          "alerts": [],
+          "health": "ok",
+          "evaluationTime": 5.3703e-05,
+          "lastEvaluation": "2026-11-25T10:43:02.404068946Z",
+          "type": "alerting"
+        }
+      ]
+    },
+    {
+      "checked_at_utc": "2026-11-25T10:43:11.630232+00:00",
+      "rules": [
+        {
+          "state": "firing",
+          "name": "LLMCostBurnRateHigh",
+          "query": "sum(rate(llm_cost_usd_total{job=\"agent\"}[5m])) * 3600 > 2",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: ${{ $value | printf \"%.2f\" }}/gi\u1edd",
+            "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "LLMCostBurnRateHigh",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "T\u1ed1c \u0111\u1ed9 chi ti\u00eau hi\u1ec7n t\u1ea1i: $3.64/gi\u1edd",
+                "summary": "Chi ph\u00ed LLM \u0111ang v\u01b0\u1ee3t $2/gi\u1edd"
+              },
+              "state": "firing",
+              "activeAt": "2026-11-25T10:34:17.571501534Z",
+              "value": "3.6431383728814875e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000858681,
+          "lastEvaluation": "2026-11-25T10:43:07.572462174Z",
+          "type": "alerting"
+        },
+        {
+          "state": "firing",
+          "name": "AgentHighErrorRate",
+          "query": "sum(rate(http_requests_total{job=\"agent\",route=\"/ask\",status=~\"5..\"}[1m])) / sum(rate(http_requests_total{job=\"agent\",route=\"/ask\"}[1m])) > 0.05",
+          "duration": 60,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Error rate hi\u1ec7n t\u1ea1i: {{ $value | humanizePercentage }} (SLO: < 5%)",
+            "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighErrorRate",
+                "severity": "critical"
+              },
+              "annotations": {
+                "description": "Error rate hi\u1ec7n t\u1ea1i: 20.12% (SLO: < 5%)",
+                "summary": "Error rate /ask v\u01b0\u1ee3t 5%"
+              },
+              "state": "firing",
+              "activeAt": "2026-11-25T10:41:07.401817116Z",
+              "value": "2.011764705882353e-01"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000890358,
+          "lastEvaluation": "2026-11-25T10:43:07.403690337Z",
+          "type": "alerting"
+        },
+        {
+          "state": "firing",
+          "name": "AgentHighLatencyP95",
+          "query": "histogram_quantile(0.95, sum by (le) (rate(http_request_duration_seconds_bucket{job=\"agent\",route=\"/ask\"}[1m]))) > 1",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "p95 hi\u1ec7n t\u1ea1i: {{ $value | humanizeDuration }} (SLO: < 1s)",
+            "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighLatencyP95",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "p95 hi\u1ec7n t\u1ea1i: 1.89s (SLO: < 1s)",
+                "summary": "p95 latency /ask v\u01b0\u1ee3t 1 gi\u00e2y"
+              },
+              "state": "firing",
+              "activeAt": "2026-11-25T10:41:07.401817116Z",
+              "value": "1.8898963730569946e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.00070945,
+          "lastEvaluation": "2026-11-25T10:43:07.404609459Z",
+          "type": "alerting"
+        },
+        {
+          "state": "inactive",
+          "name": "AgentInstanceDown",
+          "query": "up{job=\"agent\"} == 0",
+          "duration": 30,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Prometheus kh\u00f4ng g\u1ecdi \u0111\u01b0\u1ee3c /metrics c\u1ee7a {{ $labels.instance }} trong 30s",
+            "summary": "Instance agent {{ $labels.instance }} kh\u00f4ng scrape \u0111\u01b0\u1ee3c"
+          },
+          "alerts": [],
+          "health": "ok",
+          "evaluationTime": 0.000130052,
+          "lastEvaluation": "2026-11-25T10:43:07.405329574Z",
+          "type": "alerting"
+        }
+      ]
+    }
+  ]
+}

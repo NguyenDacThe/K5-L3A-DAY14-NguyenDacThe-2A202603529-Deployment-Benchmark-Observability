@@ -1,0 +1,10 @@
+test_expired_window_entries_do_not_consume_quota (test_shared_limits.SharedLimitsTests.test_expired_window_entries_do_not_consume_quota) ... ok
+test_new_utc_day_uses_fresh_budget (test_shared_limits.SharedLimitsTests.test_new_utc_day_uses_fresh_budget) ... ok
+test_parallel_budget_reservations_cannot_overspend (test_shared_limits.SharedLimitsTests.test_parallel_budget_reservations_cannot_overspend) ... ok
+test_parallel_requests_share_exact_rate_quota (test_shared_limits.SharedLimitsTests.test_parallel_requests_share_exact_rate_quota) ... ok
+test_redis_failure_rejects_rate_and_budget_checks (test_shared_limits.SharedLimitsTests.test_redis_failure_rejects_rate_and_budget_checks) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.082s
+
+OK

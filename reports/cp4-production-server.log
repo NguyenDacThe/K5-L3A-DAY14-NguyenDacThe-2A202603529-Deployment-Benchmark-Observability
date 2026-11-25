@@ -1,0 +1,112 @@
+agent-3  | ✅ Connected to Redis
+agent-3  | INFO:     Started server process [1]
+agent-3  | INFO:     Waiting for application startup.
+agent-3  | INFO:app:Starting instance instance-5b81e2
+agent-3  | INFO:app:Storage: Redis ✅
+agent-3  | INFO:     Application startup complete.
+agent-3  | INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+agent-3  | INFO:     127.0.0.1:59828 - "GET /health HTTP/1.1" 200 OK
+agent-3  | INFO:     127.0.0.1:49976 - "GET /health HTTP/1.1" 200 OK
+agent-3  | INFO:     127.0.0.1:34366 - "GET /health HTTP/1.1" 200 OK
+agent-3  | INFO:     127.0.0.1:39790 - "GET /health HTTP/1.1" 200 OK
+agent-3  | INFO:     127.0.0.1:36928 - "GET /health HTTP/1.1" 200 OK
+agent-3  | INFO:     172.18.0.6:34880 - "POST /chat HTTP/1.1" 200 OK
+agent-3  | INFO:     172.18.0.6:34880 - "GET /chat/912160d6-5d81-4ce6-b272-2c1ff0c0a980/history HTTP/1.1" 200 OK
+agent-3  | INFO:     127.0.0.1:41290 - "GET /health HTTP/1.1" 200 OK
+agent-3  | INFO:     172.18.0.6:58454 - "POST /chat HTTP/1.1" 200 OK
+agent-3  | INFO:     172.18.0.6:58454 - "POST /chat HTTP/1.1" 200 OK
+agent-3  | INFO:     127.0.0.1:43900 - "GET /health HTTP/1.1" 200 OK
+agent-3  | INFO:     127.0.0.1:48118 - "GET /health HTTP/1.1" 200 OK
+agent-3  | INFO:     172.18.0.6:33580 - "GET /chat/2fe0e81d-41ce-463d-a686-da01190b7f94/history HTTP/1.1" 200 OK
+agent-3  | INFO:     127.0.0.1:50972 - "GET /health HTTP/1.1" 200 OK
+agent-3  | INFO:     127.0.0.1:56422 - "GET /health HTTP/1.1" 200 OK
+agent-3  | INFO:     127.0.0.1:43492 - "GET /health HTTP/1.1" 200 OK
+redis-1  | 1:C 25 Nov 2026 09:31:30.300 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+redis-1  | 1:C 25 Nov 2026 09:31:30.300 * Redis version=7.4.12, bits=64, commit=00000000, modified=0, pid=1, just started
+redis-1  | 1:C 25 Nov 2026 09:31:30.300 * Configuration loaded
+redis-1  | 1:M 25 Nov 2026 09:31:30.300 * monotonic clock: POSIX clock_gettime
+redis-1  | 1:M 25 Nov 2026 09:31:30.302 * Running mode=standalone, port=6379.
+redis-1  | 1:M 25 Nov 2026 09:31:30.302 * Server initialized
+redis-1  | 1:M 25 Nov 2026 09:31:30.302 * Ready to accept connections tcp
+agent-2  | ✅ Connected to Redis
+agent-2  | INFO:     Started server process [1]
+agent-2  | INFO:     Waiting for application startup.
+agent-1  | ✅ Connected to Redis
+agent-2  | INFO:app:Starting instance instance-ce3e0c
+agent-1  | INFO:     Started server process [1]
+agent-2  | INFO:app:Storage: Redis ✅
+agent-1  | INFO:     Waiting for application startup.
+agent-2  | INFO:     Application startup complete.
+agent-2  | INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+agent-2  | INFO:     127.0.0.1:59826 - "GET /health HTTP/1.1" 200 OK
+agent-2  | INFO:     127.0.0.1:49960 - "GET /health HTTP/1.1" 200 OK
+agent-2  | INFO:     127.0.0.1:34340 - "GET /health HTTP/1.1" 200 OK
+agent-2  | INFO:     127.0.0.1:39774 - "GET /health HTTP/1.1" 200 OK
+agent-2  | INFO:     127.0.0.1:36900 - "GET /health HTTP/1.1" 200 OK
+agent-2  | INFO:     172.18.0.6:55224 - "POST /chat HTTP/1.1" 200 OK
+agent-2  | INFO:     172.18.0.6:55224 - "POST /chat HTTP/1.1" 200 OK
+agent-1  | INFO:app:Starting instance instance-63d15d
+agent-1  | INFO:app:Storage: Redis ✅
+agent-1  | INFO:     Application startup complete.
+agent-1  | INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+agent-1  | INFO:     127.0.0.1:59824 - "GET /health HTTP/1.1" 200 OK
+agent-1  | INFO:     127.0.0.1:49956 - "GET /health HTTP/1.1" 200 OK
+agent-2  | INFO:     127.0.0.1:41270 - "GET /health HTTP/1.1" 200 OK
+agent-1  | INFO:     127.0.0.1:34356 - "GET /health HTTP/1.1" 200 OK
+agent-1  | INFO:     127.0.0.1:39782 - "GET /health HTTP/1.1" 200 OK
+agent-1  | INFO:     127.0.0.1:36916 - "GET /health HTTP/1.1" 200 OK
+agent-1  | INFO:     172.18.0.6:36706 - "POST /chat HTTP/1.1" 200 OK
+agent-1  | INFO:     172.18.0.6:36706 - "POST /chat HTTP/1.1" 200 OK
+agent-1  | INFO:     127.0.0.1:41282 - "GET /health HTTP/1.1" 200 OK
+agent-1  | INFO:     172.18.0.6:50142 - "GET /ready HTTP/1.1" 200 OK
+agent-1  | INFO:     172.18.0.6:50142 - "POST /chat HTTP/1.1" 200 OK
+agent-1  | INFO:     172.18.0.6:50142 - "GET /chat/2fe0e81d-41ce-463d-a686-da01190b7f94/history HTTP/1.1" 200 OK
+agent-1  | INFO:     Shutting down
+agent-1  | INFO:     Waiting for application shutdown.
+agent-1  | INFO:app:Instance instance-63d15d shutting down
+agent-1  | INFO:     Application shutdown complete.
+agent-1  | INFO:     Finished server process [1]
+agent-2  | INFO:     172.18.0.6:49988 - "GET /health HTTP/1.1" 200 OK
+agent-2  | INFO:     172.18.0.6:49988 - "POST /chat HTTP/1.1" 200 OK
+agent-2  | INFO:     172.18.0.6:49988 - "POST /chat HTTP/1.1" 200 OK
+agent-2  | INFO:     127.0.0.1:43878 - "GET /health HTTP/1.1" 200 OK
+agent-2  | INFO:     127.0.0.1:48110 - "GET /health HTTP/1.1" 200 OK
+agent-2  | INFO:     172.18.0.6:59766 - "POST /chat HTTP/1.1" 200 OK
+agent-2  | INFO:     127.0.0.1:50968 - "GET /health HTTP/1.1" 200 OK
+agent-2  | INFO:     127.0.0.1:39158 - "GET /health HTTP/1.1" 200 OK
+agent-2  | INFO:     127.0.0.1:43486 - "GET /health HTTP/1.1" 200 OK
+agent-2  | INFO:     172.18.0.3:53522 - "GET /chat/2fe0e81d-41ce-463d-a686-da01190b7f94/history HTTP/1.1" 200 OK
+nginx-1  | /docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+nginx-1  | /docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+nginx-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
+nginx-1  | 10-listen-on-ipv6-by-default.sh: info: Getting the checksum of /etc/nginx/conf.d/default.conf
+nginx-1  | 10-listen-on-ipv6-by-default.sh: info: Enabled listen on IPv6 in /etc/nginx/conf.d/default.conf
+nginx-1  | /docker-entrypoint.sh: Sourcing /docker-entrypoint.d/15-local-resolvers.envsh
+nginx-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh
+nginx-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh
+nginx-1  | /docker-entrypoint.sh: Configuration complete; ready for start up
+nginx-1  | 172.18.0.1 - - [25/Nov/2026:09:32:54 +0000] "POST /chat HTTP/1.1" 200 241 "-" "Python-urllib/3.11"
+nginx-1  | 172.18.0.1 - - [25/Nov/2026:09:32:54 +0000] "POST /chat HTTP/1.1" 200 252 "-" "Python-urllib/3.11"
+nginx-1  | 172.18.0.1 - - [25/Nov/2026:09:32:54 +0000] "POST /chat HTTP/1.1" 200 245 "-" "Python-urllib/3.11"
+nginx-1  | 172.18.0.1 - - [25/Nov/2026:09:32:54 +0000] "POST /chat HTTP/1.1" 200 278 "-" "Python-urllib/3.11"
+nginx-1  | 172.18.0.1 - - [25/Nov/2026:09:32:54 +0000] "POST /chat HTTP/1.1" 200 272 "-" "Python-urllib/3.11"
+nginx-1  | 172.18.0.1 - - [25/Nov/2026:09:32:54 +0000] "GET /chat/912160d6-5d81-4ce6-b272-2c1ff0c0a980/history HTTP/1.1" 200 1470 "-" "Python-urllib/3.11"
+nginx-1  | 172.18.0.1 - - [25/Nov/2026:09:33:18 +0000] "GET /ready HTTP/1.1" 200 43 "-" "Python-urllib/3.11"
+nginx-1  | 172.18.0.1 - - [25/Nov/2026:09:33:18 +0000] "POST /chat HTTP/1.1" 200 241 "-" "Python-urllib/3.11"
+nginx-1  | 172.18.0.1 - - [25/Nov/2026:09:33:18 +0000] "POST /chat HTTP/1.1" 200 244 "-" "Python-urllib/3.11"
+nginx-1  | 172.18.0.1 - - [25/Nov/2026:09:33:19 +0000] "POST /chat HTTP/1.1" 200 245 "-" "Python-urllib/3.11"
+nginx-1  | 172.18.0.1 - - [25/Nov/2026:09:33:19 +0000] "POST /chat HTTP/1.1" 200 255 "-" "Python-urllib/3.11"
+nginx-1  | 172.18.0.1 - - [25/Nov/2026:09:33:19 +0000] "POST /chat HTTP/1.1" 200 249 "-" "Python-urllib/3.11"
+nginx-1  | 172.18.0.1 - - [25/Nov/2026:09:33:19 +0000] "GET /chat/2fe0e81d-41ce-463d-a686-da01190b7f94/history HTTP/1.1" 200 1416 "-" "Python-urllib/3.11"
+nginx-1  | 172.18.0.1 - - [25/Nov/2026:09:33:40 +0000] "GET /chat/2fe0e81d-41ce-463d-a686-da01190b7f94/history HTTP/1.1" 200 1416 "-" "Python-urllib/3.11"
+nginx-1  | 172.18.0.1 - - [25/Nov/2026:09:33:40 +0000] "POST /chat HTTP/1.1" 200 261 "-" "Python-urllib/3.11"
+nginx-1  | 172.18.0.1 - - [25/Nov/2026:09:33:55 +0000] "GET /chat/2fe0e81d-41ce-463d-a686-da01190b7f94/history HTTP/1.1" 499 0 "-" "Python-urllib/3.11"
+nginx-1  | /docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+nginx-1  | /docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+nginx-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
+nginx-1  | 10-listen-on-ipv6-by-default.sh: info: IPv6 listen already enabled
+nginx-1  | /docker-entrypoint.sh: Sourcing /docker-entrypoint.d/15-local-resolvers.envsh
+nginx-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh
+nginx-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh
+nginx-1  | /docker-entrypoint.sh: Configuration complete; ready for start up
+nginx-1  | 172.18.0.1 - - [25/Nov/2026:09:34:34 +0000] "GET /chat/2fe0e81d-41ce-463d-a686-da01190b7f94/history HTTP/1.1" 200 1698 "-" "Python-urllib/3.11"

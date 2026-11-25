@@ -1,0 +1,5 @@
+health: HTTP 200, expected 200 — PASS
+ready: HTTP 200, expected 200 — PASS
+ask_without_key: HTTP 401, expected 401 — PASS
+ask_with_key: HTTP 200, expected 200 — PASS
+PASS: CP6 public checks; report: /mnt/e/K5-L3A-DAY14-NguyenDacThe-2A202603529-Deployment-Benchmark-Observability/reports/submission-public-checks.json

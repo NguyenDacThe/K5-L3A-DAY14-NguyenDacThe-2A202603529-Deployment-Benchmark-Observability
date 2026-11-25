@@ -34,3 +34,7 @@ Thumbs.db
 # ── Docker volumes (local dev) ─────────────────────��──────
 data/
 volumes/
+
+# Local browser control state, not submission evidence
+reports/cp8-browser-session.json
+reports/cp8-browser-task.json

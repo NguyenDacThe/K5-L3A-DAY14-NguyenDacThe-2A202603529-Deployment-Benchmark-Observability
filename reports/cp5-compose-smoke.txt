@@ -1,0 +1,6 @@
+/health HTTP 200: {"status":"ok","environment":"development"}
+/ready HTTP 200: {"ready":true}
+/ask HTTP 401: {"detail":"Invalid or missing API key"}
+/ask HTTP 401: {"detail":"Invalid or missing API key"}
+/ask HTTP 200: {"question":"What is Docker?","answer":"Container là cách đóng gói app để chạy ở mọi nơi. Build once, run anywhere!","usage":{"cost_usd":1.89e-05}}
+PASS: Compose agent + Redis real HTTP checks.

@@ -1,0 +1,7 @@
+PORT=18005: GET /health HTTP 200: {"status":"ok","environment":"staging"}
+UID                 PID                 PPID                C                   STIME               TTY                 TIME                CMD
+999                 2373                2349                1                   09:47               ?                   00:00:00            /opt/venv/bin/python /opt/venv/bin/uvicorn app.main:app --host 0.0.0.0 --port 18005 --workers 2 --timeout-graceful-shutdown 8
+999                 2397                2373                0                   09:47               ?                   00:00:00            /opt/venv/bin/python -B -c from multiprocessing.resource_tracker import main;main(6)
+999                 2398                2373                2                   09:47               ?                   00:00:01            /opt/venv/bin/python -B -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=7, pipe_handle=9) --multiprocessing-fork
+999                 2399                2373                2                   09:47               ?                   00:00:00            /opt/venv/bin/python -B -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=7, pipe_handle=13) --multiprocessing-fork
+0

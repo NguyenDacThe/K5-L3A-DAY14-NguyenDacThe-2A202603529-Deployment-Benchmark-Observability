@@ -1,0 +1,3 @@
+After restarting Nginx to refresh upstreams: GET history HTTP 200
+ASSERT PASS: original 10 messages unchanged; new turn persisted; history has 12 messages.
+Limitation: the first history read after POST timed out at 15 seconds before restarting Nginx; uninterrupted failover was not demonstrated.

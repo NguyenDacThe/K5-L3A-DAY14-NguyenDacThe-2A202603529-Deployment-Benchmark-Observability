@@ -1,0 +1,24 @@
+Indexing...
+Uploading...
+  Deployment: https://railway.com/project/93b45f7d-c21d-4c37-bcff-a2d81d9e28f3/service/f757017e-8d72-4ee3-83a6-346d81c53057?id=03d79272-538c-43bc-97eb-f83a09d20a41
+CI mode enabled
+fetched snapshot sha256:5bfdc351233b260d121f1566d7dad7fac59efeb01c2779309f45a102913afae4 (67 kB bytes)
+fetching snapshot
+unpacking archive
+[internal] load build definition from Dockerfile
+[internal] load metadata for docker.io/library/python:3.11-slim
+[internal] load .dockerignore
+importing cache manifest from s3:9030405925439967209
+[runtime 6/6] COPY utils/ ./utils/
+[runtime 5/6] COPY app/ ./app/
+[runtime 4/6] COPY --from=builder /opt/venv /opt/venv
+[builder 4/4] RUN python -m venv /opt/venv     && /opt/venv/bin/pip install --no-cache-dir -r requirements.txt
+[builder 3/4] COPY requirements.txt .
+[internal] load build context
+[builder 2/4] WORKDIR /build
+[runtime 3/6] RUN groupadd --system agent && useradd --system --gid agent agent
+[runtime 2/6] WORKDIR /app
+[builder 1/4] FROM docker.io/library/python:3.11-slim@sha256:61e01f72680f86a5279ad510818ab7b2ee9f049822589d4e34e33e044360356c
+[internal] load build context: rpc error: code = Internal desc = rpc error: code = Internal desc = header key "exclude-patterns" contains value with non-printable ASCII characters
+Build Failed: build daemon returned an error < failed to solve: Internal: rpc error: code = Internal desc = rpc error: code = Internal desc = header key "exclude-patterns" contains value with non-printable ASCII characters >
+Deploy failed: Failed to build an image.

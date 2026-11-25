@@ -1,0 +1,1 @@
+GET http://localhost:8080/metrics -> HTTP 404 (Nginx blocks public scrape route). Prometheus scrapes each agent directly.

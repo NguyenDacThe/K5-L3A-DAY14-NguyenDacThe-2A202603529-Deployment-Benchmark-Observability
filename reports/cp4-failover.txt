@@ -1,0 +1,3 @@
+ASSERT PASS after agent-1 stopped: history still has all 10 original messages.
+POST /chat HTTP 200 {"session_id": "2fe0e81d-41ce-463d-a686-da01190b7f94", "question": "Still available after one instance stopped?", "answer": "Agent đang hoạt động tốt! (mock response) Hỏi thêm câu hỏi đi nhé.", "turn": 7, "served_by": "instance-ce3e0c", "storage": "redis"}
+Initial failover test: history GET after successful POST timed out at the client limit of 15 seconds.

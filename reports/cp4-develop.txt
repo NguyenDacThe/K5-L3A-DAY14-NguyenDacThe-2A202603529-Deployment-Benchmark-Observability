@@ -1,0 +1,43 @@
+CP4 develop: health, readiness and graceful shutdown
+Executed at: 2026-11-25T09:31:25.058642+00:00
+Runtime: WSL2 / posix
+
+GET /health
+HTTP/1.1 200 OK
+date: Wed, 25 Nov 2026 09:31:29 GMT
+server: uvicorn
+content-length: 185
+content-type: application/json
+
+{"status":"ok","uptime_seconds":1.4,"version":"1.0.0","environment":"development","timestamp":"2026-11-25T09:31:30.429495+00:00","checks":{"memory":{"status":"ok","used_percent":12.9}}}
+
+GET /ready
+HTTP/1.1 200 OK
+date: Wed, 25 Nov 2026 09:31:29 GMT
+server: uvicorn
+content-length: 37
+content-type: application/json
+
+{"ready":true,"in_flight_requests":1}
+Sent SIGTERM while two slow requests were pending (0.5 seconds after launch).
+
+Request 1: curl exit=0
+HTTP/1.1 200 OK
+date: Wed, 25 Nov 2026 09:31:29 GMT
+server: uvicorn
+content-length: 126
+content-type: application/json
+
+{"answer":"Đây là câu trả lời từ AI agent (mock). Trong production, đây sẽ là response từ OpenAI/Anthropic."}
+
+Request 2: curl exit=0
+HTTP/1.1 200 OK
+date: Wed, 25 Nov 2026 09:31:29 GMT
+server: uvicorn
+content-length: 126
+content-type: application/json
+
+{"answer":"Đây là câu trả lời từ AI agent (mock). Trong production, đây sẽ là response từ OpenAI/Anthropic."}
+Server exit code: 0
+Elapsed from request launch to exit: 6.267 seconds
+PASS: both in-flight requests completed with 200; server exited after SIGTERM.

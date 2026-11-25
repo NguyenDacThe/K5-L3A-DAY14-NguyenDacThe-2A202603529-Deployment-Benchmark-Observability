@@ -1,0 +1,247 @@
+{
+  "buckets": {
+    "edges": []
+  },
+  "deletedAt": null,
+  "environments": {
+    "edges": [
+      {
+        "node": {
+          "canAccess": true,
+          "deletedAt": null,
+          "id": "50a43efb-2781-4b9e-9f1f-8200297ee45f",
+          "name": "production",
+          "serviceInstances": {
+            "edges": [
+              {
+                "node": {
+                  "activeDeployments": [],
+                  "autoInstrumentationEnabled": false,
+                  "cronSchedule": null,
+                  "domains": {
+                    "customDomains": [],
+                    "serviceDomains": []
+                  },
+                  "environmentId": "50a43efb-2781-4b9e-9f1f-8200297ee45f",
+                  "id": "09f5cc32-e72d-4520-b687-53ded6f32922",
+                  "latestDeployment": null,
+                  "nextCronRunAt": null,
+                  "numReplicas": null,
+                  "serviceId": "f757017e-8d72-4ee3-83a6-346d81c53057",
+                  "serviceName": "agent",
+                  "source": {
+                    "image": null,
+                    "repo": null
+                  },
+                  "startCommand": null,
+                  "tracingEnabled": false
+                }
+              },
+              {
+                "node": {
+                  "activeDeployments": [
+                    {
+                      "createdAt": "2026-11-25T10:01:08.212Z",
+                      "deploymentStopped": false,
+                      "id": "26b413fb-07d3-40ed-8ca6-a92c63fc02c8",
+                      "instances": [
+                        {
+                          "id": "809d8dda-f789-4fcb-92f2-3ca1fa642e32",
+                          "status": "RUNNING"
+                        }
+                      ],
+                      "meta": {
+                        "image": "redis:8.2",
+                        "imageDigest": "sha256:bb302517211721bf85ae3152b663c848a7cb36e79b02d69239ce20b5ddce95be",
+                        "logsV2": true,
+                        "patchId": "75d50f81-af74-4b1f-9b35-305c9d2a55b3",
+                        "plan": "trial",
+                        "reason": "deploy",
+                        "runtime": "V2",
+                        "runtimePick": {
+                          "reason": "unsupported_feature",
+                          "runtime": "podman",
+                          "succeededAt": "2026-11-25T10:01:14.037Z"
+                        },
+                        "serviceManifest": {
+                          "build": {
+                            "buildCommand": null,
+                            "buildEnvironment": "V3",
+                            "builder": "RAILPACK",
+                            "dockerfilePath": null,
+                            "nixpacksConfigPath": null,
+                            "nixpacksPlan": null,
+                            "watchPatterns": []
+                          },
+                          "deploy": {
+                            "cronSchedule": null,
+                            "drainingSeconds": null,
+                            "healthcheckPath": null,
+                            "healthcheckTimeout": null,
+                            "ipv6EgressEnabled": false,
+                            "limitOverride": null,
+                            "multiRegionConfig": {
+                              "iad": {
+                                "numReplicas": 1
+                              }
+                            },
+                            "numReplicas": 1,
+                            "overlapSeconds": null,
+                            "preDeployCommand": null,
+                            "preDeployTimeoutSeconds": null,
+                            "region": null,
+                            "registryCredentials": null,
+                            "requiredMountPath": null,
+                            "restartPolicyMaxRetries": 10,
+                            "restartPolicyType": "ON_FAILURE",
+                            "runtime": "V2",
+                            "sleepApplication": false,
+                            "startCommand": "/bin/sh -c \"rm -rf $RAILWAY_VOLUME_MOUNT_PATH/lost+found/ && exec docker-entrypoint.sh redis-server --requirepass $REDIS_PASSWORD --save 60 1 --dir $RAILWAY_VOLUME_MOUNT_PATH\"",
+                            "useLegacyStacker": false
+                          }
+                        },
+                        "volumeMounts": [
+                          "/data"
+                        ]
+                      },
+                      "status": "SUCCESS"
+                    }
+                  ],
+                  "autoInstrumentationEnabled": false,
+                  "cronSchedule": null,
+                  "domains": {
+                    "customDomains": [],
+                    "serviceDomains": []
+                  },
+                  "environmentId": "50a43efb-2781-4b9e-9f1f-8200297ee45f",
+                  "id": "7e7dc466-127c-4515-93d0-850352bd84c6",
+                  "latestDeployment": {
+                    "canRedeploy": true,
+                    "createdAt": "2026-11-25T10:01:08.212Z",
+                    "deploymentStopped": false,
+                    "id": "26b413fb-07d3-40ed-8ca6-a92c63fc02c8",
+                    "instances": [
+                      {
+                        "id": "809d8dda-f789-4fcb-92f2-3ca1fa642e32",
+                        "status": "RUNNING"
+                      }
+                    ],
+                    "meta": {
+                      "image": "redis:8.2",
+                      "imageDigest": "sha256:bb302517211721bf85ae3152b663c848a7cb36e79b02d69239ce20b5ddce95be",
+                      "logsV2": true,
+                      "patchId": "75d50f81-af74-4b1f-9b35-305c9d2a55b3",
+                      "plan": "trial",
+                      "reason": "deploy",
+                      "runtime": "V2",
+                      "runtimePick": {
+                        "reason": "unsupported_feature",
+                        "runtime": "podman",
+                        "succeededAt": "2026-11-25T10:01:14.037Z"
+                      },
+                      "serviceManifest": {
+                        "build": {
+                          "buildCommand": null,
+                          "buildEnvironment": "V3",
+                          "builder": "RAILPACK",
+                          "dockerfilePath": null,
+                          "nixpacksConfigPath": null,
+                          "nixpacksPlan": null,
+                          "watchPatterns": []
+                        },
+                        "deploy": {
+                          "cronSchedule": null,
+                          "drainingSeconds": null,
+                          "healthcheckPath": null,
+                          "healthcheckTimeout": null,
+                          "ipv6EgressEnabled": false,
+                          "limitOverride": null,
+                          "multiRegionConfig": {
+                            "iad": {
+                              "numReplicas": 1
+                            }
+                          },
+                          "numReplicas": 1,
+                          "overlapSeconds": null,
+                          "preDeployCommand": null,
+                          "preDeployTimeoutSeconds": null,
+                          "region": null,
+                          "registryCredentials": null,
+                          "requiredMountPath": null,
+                          "restartPolicyMaxRetries": 10,
+                          "restartPolicyType": "ON_FAILURE",
+                          "runtime": "V2",
+                          "sleepApplication": false,
+                          "startCommand": "/bin/sh -c \"rm -rf $RAILWAY_VOLUME_MOUNT_PATH/lost+found/ && exec docker-entrypoint.sh redis-server --requirepass $REDIS_PASSWORD --save 60 1 --dir $RAILWAY_VOLUME_MOUNT_PATH\"",
+                          "useLegacyStacker": false
+                        }
+                      },
+                      "volumeMounts": [
+                        "/data"
+                      ]
+                    },
+                    "status": "SUCCESS"
+                  },
+                  "nextCronRunAt": null,
+                  "numReplicas": 1,
+                  "serviceId": "09e90357-2a6b-4cef-a4cb-e1434bd01fdd",
+                  "serviceName": "Redis",
+                  "source": {
+                    "image": "redis:8.2",
+                    "repo": null
+                  },
+                  "startCommand": "/bin/sh -c \"rm -rf $RAILWAY_VOLUME_MOUNT_PATH/lost+found/ && exec docker-entrypoint.sh redis-server --requirepass $REDIS_PASSWORD --save 60 1 --dir $RAILWAY_VOLUME_MOUNT_PATH\"",
+                  "tracingEnabled": false
+                }
+              }
+            ]
+          },
+          "unmergedChangesCount": null,
+          "volumeInstances": {
+            "edges": [
+              {
+                "node": {
+                  "currentSizeMB": 32.178176,
+                  "deletedAt": null,
+                  "environmentId": "50a43efb-2781-4b9e-9f1f-8200297ee45f",
+                  "id": "4c924d0e-dd2d-4d53-b5a1-ade6294c744c",
+                  "isPendingDeletion": false,
+                  "mountPath": "/data",
+                  "serviceId": "09e90357-2a6b-4cef-a4cb-e1434bd01fdd",
+                  "sizeMB": 500,
+                  "state": "READY",
+                  "volume": {
+                    "id": "bed220fc-78e7-4405-9082-ff5ce54f01fc",
+                    "name": "redis-volume"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "id": "93b45f7d-c21d-4c37-bcff-a2d81d9e28f3",
+  "name": "day14-production-agent",
+  "services": {
+    "edges": [
+      {
+        "node": {
+          "id": "09e90357-2a6b-4cef-a4cb-e1434bd01fdd",
+          "name": "Redis"
+        }
+      },
+      {
+        "node": {
+          "id": "f757017e-8d72-4ee3-83a6-346d81c53057",
+          "name": "agent"
+        }
+      }
+    ]
+  },
+  "workspace": {
+    "name": "nguyendacthe's Projects"
+  },
+  "workspaceId": "3fb08cb3-2f0a-4292-92b3-e2dc3fe97795"
+}

@@ -1,0 +1,15 @@
+﻿{
+    "config":  {
+                   "MOCK_SLOW_RATE":  0.3,
+                   "MOCK_ERROR_RATE":  0.2,
+                   "LLM_MODEL":  "mock-llm-small",
+                   "AGENT_VERSION":  "v2",
+                   "users":  30
+               },
+    "started_at_utc":  "2026-11-25T10:40:48.7283799Z",
+    "combined":  true,
+    "experiments":  [
+                        "A",
+                        "B"
+                    ]
+}

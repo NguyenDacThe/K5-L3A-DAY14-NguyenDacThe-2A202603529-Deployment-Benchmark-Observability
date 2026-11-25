@@ -1,0 +1,3 @@
+Linux-native source staging: /tmp/cp6-source-wojivi4p
+Allowlist: Dockerfile, requirements.txt, railway.toml, .dockerignore, .env.example, app/*.py, utils/*.py
+No .env, cloud key, token, venv or benchmark files uploaded.

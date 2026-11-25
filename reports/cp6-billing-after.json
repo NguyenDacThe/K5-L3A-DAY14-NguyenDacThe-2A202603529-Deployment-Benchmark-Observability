@@ -1,0 +1,14 @@
+{
+  "customer": {
+    "creditBalance": 5,
+    "currentUsage": 0.0003125609351851851,
+    "hasExhaustedFreePlan": false,
+    "isTrialing": true,
+    "remainingUsageCreditBalance": 4.9996874390648145,
+    "subscriptions": [],
+    "trialDaysRemaining": 30,
+    "paymentMethodPresent": false
+  },
+  "id": "3fb08cb3-2f0a-4292-92b3-e2dc3fe97795",
+  "plan": "HOBBY"
+}

@@ -1,0 +1,3 @@
+NAME                     IMAGE                  COMMAND                  SERVICE   CREATED          STATUS                    PORTS
+k5-day14-final-agent-1   k5-day14-final-agent   "sh -c 'exec uvicorn…"   agent     48 seconds ago   Up 41 seconds (healthy)   127.0.0.1:8000->8000/tcp
+k5-day14-final-redis-1   redis:7-alpine         "docker-entrypoint.s…"   redis     48 seconds ago   Up 47 seconds (healthy)   6379/tcp

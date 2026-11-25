@@ -1,0 +1,188 @@
+[
+  {
+    "label": "load_v2_c1",
+    "args": [
+      "load_test.py",
+      "--url",
+      "http://localhost:8002",
+      "--requests",
+      "300",
+      "--concurrency",
+      "1",
+      "--out",
+      "reports/load_v2_c1.json"
+    ],
+    "started_at_utc": "2026-11-25T10:18:05.508290+00:00",
+    "finished_at_utc": "2026-11-25T10:19:24.247361+00:00",
+    "exit_code": 0
+  },
+  {
+    "label": "load_v2_c10",
+    "args": [
+      "load_test.py",
+      "--url",
+      "http://localhost:8002",
+      "--requests",
+      "300",
+      "--concurrency",
+      "10",
+      "--out",
+      "reports/load_v2_c10.json"
+    ],
+    "started_at_utc": "2026-11-25T10:19:24.258576+00:00",
+    "finished_at_utc": "2026-11-25T10:19:35.269458+00:00",
+    "exit_code": 0
+  },
+  {
+    "label": "load_v2_c50",
+    "args": [
+      "load_test.py",
+      "--url",
+      "http://localhost:8002",
+      "--requests",
+      "300",
+      "--concurrency",
+      "50",
+      "--out",
+      "reports/load_v2_c50.json"
+    ],
+    "started_at_utc": "2026-11-25T10:19:35.281210+00:00",
+    "finished_at_utc": "2026-11-25T10:19:40.323627+00:00",
+    "exit_code": 0
+  },
+  {
+    "label": "load_v2_c100",
+    "args": [
+      "load_test.py",
+      "--url",
+      "http://localhost:8002",
+      "--requests",
+      "300",
+      "--concurrency",
+      "100",
+      "--out",
+      "reports/load_v2_c100.json"
+    ],
+    "started_at_utc": "2026-11-25T10:19:40.334237+00:00",
+    "finished_at_utc": "2026-11-25T10:19:48.873899+00:00",
+    "exit_code": 1
+  },
+  {
+    "label": "load_v2_slow_0",
+    "args": [
+      "load_test.py",
+      "--url",
+      "http://localhost:8002",
+      "--requests",
+      "300",
+      "--concurrency",
+      "20",
+      "--out",
+      "reports/load_v2_slow_0.json"
+    ],
+    "started_at_utc": "2026-11-25T10:19:54.677898+00:00",
+    "finished_at_utc": "2026-11-25T10:20:00.938487+00:00",
+    "exit_code": 0
+  },
+  {
+    "label": "load_v2_slow_0.03",
+    "args": [
+      "load_test.py",
+      "--url",
+      "http://localhost:8002",
+      "--requests",
+      "300",
+      "--concurrency",
+      "20",
+      "--out",
+      "reports/load_v2_slow_0.03.json"
+    ],
+    "started_at_utc": "2026-11-25T10:20:07.714476+00:00",
+    "finished_at_utc": "2026-11-25T10:20:15.904824+00:00",
+    "exit_code": 0
+  },
+  {
+    "label": "load_v2_slow_0.1",
+    "args": [
+      "load_test.py",
+      "--url",
+      "http://localhost:8002",
+      "--requests",
+      "300",
+      "--concurrency",
+      "20",
+      "--out",
+      "reports/load_v2_slow_0.1.json"
+    ],
+    "started_at_utc": "2026-11-25T10:20:22.312312+00:00",
+    "finished_at_utc": "2026-11-25T10:20:32.249985+00:00",
+    "exit_code": 1
+  },
+  {
+    "label": "eval_v1",
+    "args": [
+      "eval/run_eval.py",
+      "--url",
+      "http://localhost:8001",
+      "--out",
+      "reports/eval_v1.json"
+    ],
+    "started_at_utc": "2026-11-25T10:20:42.377167+00:00",
+    "finished_at_utc": "2026-11-25T10:20:49.471152+00:00",
+    "exit_code": 1
+  },
+  {
+    "label": "eval_v2",
+    "args": [
+      "eval/run_eval.py",
+      "--url",
+      "http://localhost:8002",
+      "--baseline",
+      "reports/eval_v1.json",
+      "--out",
+      "reports/eval_v2.json"
+    ],
+    "started_at_utc": "2026-11-25T10:20:49.483872+00:00",
+    "finished_at_utc": "2026-11-25T10:20:57.563948+00:00",
+    "exit_code": 0
+  },
+  {
+    "label": "eval_v2_fixed",
+    "args": [
+      "eval/run_eval.py",
+      "--url",
+      "http://localhost:8002",
+      "--min-accuracy",
+      "1.0",
+      "--baseline",
+      "reports/eval_v2.json",
+      "--out",
+      "reports/eval_v2_fixed.json"
+    ],
+    "started_at_utc": "2026-11-25T10:22:17.058094+00:00",
+    "finished_at_utc": "2026-11-25T10:22:23.600788+00:00",
+    "exit_code": 0
+  },
+  {
+    "label": "ci-local",
+    "args": [
+      "bash",
+      "-c",
+      "workflow job run block"
+    ],
+    "started_at_utc": "2026-11-25T10:22:23.849822+00:00",
+    "finished_at_utc": "2026-11-25T10:22:54.663249+00:00",
+    "exit_code": 1
+  },
+  {
+    "label": "ci-local-with-venv-path",
+    "args": [
+      "bash",
+      "-c",
+      "workflow job run block"
+    ],
+    "started_at_utc": "2026-11-25T10:24:41.141328+00:00",
+    "finished_at_utc": "2026-11-25T10:24:53.794329+00:00",
+    "exit_code": 0
+  }
+]

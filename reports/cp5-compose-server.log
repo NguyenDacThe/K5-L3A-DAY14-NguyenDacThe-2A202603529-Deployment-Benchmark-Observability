@@ -1,0 +1,38 @@
+agent-1  | INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+agent-1  | INFO:     Started parent process [1]
+agent-1  | INFO:     Started server process [9]
+agent-1  | INFO:     Waiting for application startup.
+redis-1  | 1:C 25 Nov 2026 09:46:24.451 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+redis-1  | 1:C 25 Nov 2026 09:46:24.451 * Redis version=7.4.12, bits=64, commit=00000000, modified=0, pid=1, just started
+redis-1  | 1:C 25 Nov 2026 09:46:24.451 * Configuration loaded
+redis-1  | 1:M 25 Nov 2026 09:46:24.452 * monotonic clock: POSIX clock_gettime
+redis-1  | 1:M 25 Nov 2026 09:46:24.454 * Running mode=standalone, port=6379.
+agent-1  | INFO:     Started server process [8]
+agent-1  | INFO:     Waiting for application startup.
+redis-1  | 1:M 25 Nov 2026 09:46:24.455 * Server initialized
+agent-1  | {"ts": "2026-11-25T09:46:31.375625+00:00", "lvl": "INFO", "event": "startup", "environment": "development"}
+redis-1  | 1:M 25 Nov 2026 09:46:24.458 * Creating AOF base file appendonly.aof.1.base.rdb on server start
+redis-1  | 1:M 25 Nov 2026 09:46:24.461 * Creating AOF incr file appendonly.aof.1.incr.aof on server start
+redis-1  | 1:M 25 Nov 2026 09:46:24.461 * Ready to accept connections tcp
+agent-1  | {"ts": "2026-11-25T09:46:31.376120+00:00", "lvl": "INFO", "event": "startup", "environment": "development"}
+agent-1  | INFO:     Application startup complete.
+agent-1  | INFO:     Application startup complete.
+agent-1  | {"ts": "2026-11-25T09:46:35.294243+00:00", "lvl": "INFO", "event": "request", "method": "GET", "path": "/health", "status": 200, "ms": 1.33}
+agent-1  | INFO:     127.0.0.1:51342 - "GET /health HTTP/1.1" 200 OK
+agent-1  | {"ts": "2026-11-25T09:46:50.653654+00:00", "lvl": "INFO", "event": "request", "method": "GET", "path": "/health", "status": 200, "ms": 1.92}
+agent-1  | INFO:     127.0.0.1:44316 - "GET /health HTTP/1.1" 200 OK
+agent-1  | {"ts": "2026-11-25T09:47:05.932287+00:00", "lvl": "INFO", "event": "request", "method": "GET", "path": "/health", "status": 200, "ms": 0.89}
+agent-1  | INFO:     127.0.0.1:58714 - "GET /health HTTP/1.1" 200 OK
+agent-1  | INFO:     172.18.0.1:38060 - "GET /ready HTTP/1.1" 200 OK
+agent-1  | {"ts": "2026-11-25T09:47:09.014549+00:00", "lvl": "INFO", "event": "request", "method": "GET", "path": "/ready", "status": 200, "ms": 16.7}
+agent-1  | {"ts": "2026-11-25T09:47:09.017368+00:00", "lvl": "INFO", "event": "request", "method": "GET", "path": "/health", "status": 200, "ms": 0.89}
+agent-1  | INFO:     172.18.0.1:38070 - "GET /health HTTP/1.1" 200 OK
+agent-1  | INFO:     172.18.0.1:38074 - "GET /ready HTTP/1.1" 200 OK
+agent-1  | {"ts": "2026-11-25T09:47:09.020675+00:00", "lvl": "INFO", "event": "request", "method": "GET", "path": "/ready", "status": 200, "ms": 1.04}
+agent-1  | INFO:     172.18.0.1:38086 - "POST /ask HTTP/1.1" 401 Unauthorized
+agent-1  | {"ts": "2026-11-25T09:47:09.024788+00:00", "lvl": "INFO", "event": "request", "method": "POST", "path": "/ask", "status": 401, "ms": 1.75}
+agent-1  | {"ts": "2026-11-25T09:47:09.028812+00:00", "lvl": "INFO", "event": "request", "method": "POST", "path": "/ask", "status": 401, "ms": 1.32}
+agent-1  | INFO:     172.18.0.1:38096 - "POST /ask HTTP/1.1" 401 Unauthorized
+agent-1  | {"ts": "2026-11-25T09:47:09.151087+00:00", "lvl": "INFO", "event": "answer", "cost_usd": 1.89e-05}
+agent-1  | INFO:     172.18.0.1:38112 - "POST /ask HTTP/1.1" 200 OK
+agent-1  | {"ts": "2026-11-25T09:47:09.151686+00:00", "lvl": "INFO", "event": "request", "method": "POST", "path": "/ask", "status": 200, "ms": 119.72}

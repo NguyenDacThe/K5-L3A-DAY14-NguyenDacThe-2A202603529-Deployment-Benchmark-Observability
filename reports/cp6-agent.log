@@ -1,0 +1,26 @@
+Booting VM for replica 1
+replica 1: healthcheck failed: healthcheck has not passed: server unavailable: Get "http://fd12:62c0:da7f:1:3000:14e:618f:9949:8000/health": dial tcp [fd12:0:8:0:3000:14e:8000:1]:0->[fd12:62c0:da7f:1:3000:14e:618f:9949]:8000: connect: connection refused
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     Started parent process [469]
+INFO:     Started server process [476]
+INFO:     Waiting for application startup.
+INFO:     Started server process [477]
+INFO:     Waiting for application startup.
+2026-11-25T10:05:46.346602512Z [INFO]  ts="2026-11-25T10:05:46.346048+00:00" event="startup" environment="production"
+INFO:     Application startup complete.
+2026-11-25T10:05:46.346603552Z [INFO]  ts="2026-11-25T10:05:46.346426+00:00" event="startup" environment="production"
+INFO:     Application startup complete.
+INFO:     100.64.0.1:51971 - "GET /health HTTP/1.1" 200 OK
+2026-11-25T10:05:47.933952214Z [INFO]  ts="2026-11-25T10:05:47.933375+00:00" event="request" method="GET" path="/health" status=200 ms=1.19
+replica 1: healthcheck succeeded
+2026-11-25T10:06:22.359277374Z [INFO]  ts="2026-11-25T10:06:22.358049+00:00" event="request" method="GET" path="/health" status=200 ms=15.45
+INFO:     100.64.0.2:42250 - "GET /health HTTP/1.1" 200 OK
+2026-11-25T10:06:22.892844199Z [INFO]  ts="2026-11-25T10:06:22.892634+00:00" event="request" method="GET" path="/ready" status=200 ms=159.42
+INFO:     100.64.0.3:16954 - "GET /ready HTTP/1.1" 200 OK
+2026-11-25T10:06:23.316677758Z [INFO]  ts="2026-11-25T10:06:23.316590+00:00" event="request" method="POST" path="/ask" status=401 ms=5.19
+INFO:     100.64.0.4:42688 - "POST /ask HTTP/1.1" 401 Unauthorized
+2026-11-25T10:06:23.878732246Z [INFO]  ts="2026-11-25T10:06:23.878518+00:00" event="answer" cost_usd=0.0000183
+2026-11-25T10:06:23.879607868Z [INFO]  ts="2026-11-25T10:06:23.879528+00:00" event="request" method="POST" path="/ask" status=200 ms=185.89
+INFO:     100.64.0.5:44188 - "POST /ask HTTP/1.1" 200 OK
+2026-11-25T10:07:27.625717953Z [INFO]  ts="2026-11-25T10:07:27.625157+00:00" event="request" method="GET" path="/health" status=200 ms=17.47
+INFO:     100.64.0.6:16136 - "GET /health HTTP/1.1" 200 OK

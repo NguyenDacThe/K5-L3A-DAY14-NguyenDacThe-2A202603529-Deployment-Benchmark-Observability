@@ -1,7 +1,10 @@
 # Part 6 — Final Project: Production-ready AI Agent
 
-Bạn tự xây một AI agent đủ chuẩn production từ **bản khung** trong thư mục này, kết hợp mọi thứ đã học ở Part 1–5.
-Mọi file đều đã có sẵn, phần việc của bạn nằm ở các chỗ ghi `TODO`. Bản khung chạy được nhưng **chưa đạt tiêu chí nào**.
+Agent đã được triển khai từ bản khung, kết hợp cấu hình môi trường, API key, Redis, rate limit, cost guard, log JSON và graceful shutdown.
+
+CP5 đã đạt **PASS 12/12, 41/41 checks** ngày 25/11/2026. Output đầy đủ: [cp5-production-ready.txt](../reports/cp5-production-ready.txt). Đây là kiểm tra local và cấu hình deploy; URL cloud được thực hiện riêng ở CP6.
+
+CP6 đã deploy tại **https://agent-production-702ecd1c.up.railway.app**, agent và Redis Online, bốn kiểm tra public đạt 200/200/401/200. Script chấm có `--public-url` đạt **12/12, 42/42 checks**. Xem [DEPLOYMENT.md](../DEPLOYMENT.md) để biết cấu hình cloud, cách kiểm tra và bằng chứng; chỉ dùng Trial credit, không nâng cấp gói. Railway hiện deprecated tùy chọn file TOML cũ nên health check cloud đã được đặt trực tiếp trên service; vẫn giữ TOML theo yêu cầu chấm lab.
 
 Bài chỉ được tính hoàn thành khi script chấm báo **`PASS 12/12`**:
 
@@ -14,18 +17,18 @@ python check_production_ready.py
 
 ## Checklist Deliverable
 
-- [ ] Dockerfile (multi-stage, < 500 MB)
-- [ ] docker-compose.yml (agent + redis)
-- [ ] .dockerignore
-- [ ] Health check endpoint (`GET /health`)
-- [ ] Readiness endpoint (`GET /ready`)
-- [ ] API Key authentication
-- [ ] Rate limiting
-- [ ] Cost guard
-- [ ] Config từ environment variables
-- [ ] Structured logging
-- [ ] Graceful shutdown
-- [ ] Public URL ready (Railway / Render config)
+- [x] Dockerfile (multi-stage, đo được 274 MB)
+- [x] docker-compose.yml (agent + redis)
+- [x] .dockerignore
+- [x] Health check endpoint (`GET /health`)
+- [x] Readiness endpoint (`GET /ready`)
+- [x] API Key authentication
+- [x] Rate limiting
+- [x] Cost guard
+- [x] Config từ environment variables
+- [x] Structured logging
+- [x] Graceful shutdown
+- [x] Cấu hình Railway sẵn sàng cho CP6
 
 ---
 
@@ -52,30 +55,33 @@ Script tự khởi động agent của bạn, gọi API thật, build và chạy
 
 ---
 
-## Bản khung
+## Cấu trúc triển khai
 
 ```
 06-lab-complete/
 ├── app/
-│   ├── main.py           # TODO: /health, /ready, nối auth + rate limit + cost guard vào /ask, log JSON, shutdown
-│   ├── config.py         # TODO: đọc cấu hình từ biến môi trường
-│   ├── auth.py           # TODO: verify_api_key → 401
-│   ├── rate_limiter.py   # TODO: check_rate_limit → 429 (Redis)
-│   ├── cost_guard.py     # TODO: check_budget → 402, record_cost (Redis)
-│   └── redis_client.py   # TODO: kết nối Redis + redis_healthy() cho /ready
+│   ├── main.py           # Routes, JSON logging, lifespan; sync endpoint chạy trong thread pool
+│   ├── config.py         # Env/.env; kiểm tra cấu hình, không ghi cứng key
+│   ├── auth.py           # X-API-Key, constant-time comparison → 401
+│   ├── rate_limiter.py   # Redis sorted set + Lua atomic → 429
+│   ├── cost_guard.py     # Giữ trước/quyết toán ngân sách ngày UTC → 402
+│   └── redis_client.py   # Lazy connection, timeout, fail closed → 503
 ├── utils/mock_llm.py     # Mock LLM — có sẵn, không cần sửa
-├── Dockerfile            # TODO: viết lại thành multi-stage production
-├── docker-compose.yml    # TODO: thêm redis
-├── .dockerignore         # TODO
-├── .env.example          # TODO: liệt kê đủ biến
-├── railway.toml          # TODO (hoặc render.yaml)
-├── render.yaml           # TODO (hoặc railway.toml)
+├── Dockerfile            # Multi-stage slim, non-root, PID 1 uvicorn, PORT từ env
+├── docker-compose.yml    # Agent + Redis AOF, volume, noeviction
+├── .dockerignore         # Loại secrets, venv, cache và Part 7
+├── .env.example          # Cấu hình mẫu, API key để trống
+├── railway.toml          # DOCKERFILE + /health; deploy với service root ở thư mục này
+├── render.yaml           # Chỉ comment; lựa chọn deploy là Railway
+├── tests/test_shared_limits.py # Integration tests với Redis thật
 ├── requirements.txt      # Có sẵn
 ├── check_production_ready.py   # Script chấm — không sửa
 └── benchmark-observability/    # Part 7 — làm sau khi xong Part 6
 ```
 
-**Gợi ý thứ tự làm:** `/health` → `config.py` → log JSON → `auth.py` → `redis_client.py` + `/ready` → `rate_limiter.py` → `cost_guard.py` → graceful shutdown → `Dockerfile` + `.dockerignore` → `docker-compose.yml` → `railway.toml` / `render.yaml`. Hướng dẫn từng bước: [CODE_LAB.md — Part 6](../CODE_LAB.md#part-6-final-project-60-phút).
+Rate limit dùng cửa sổ trượt 60 giây theo hash API key và Redis TIME. Ngân sách dùng chung cho service theo `ENVIRONMENT`, reset bằng key ngày UTC; tiền lưu bằng số nguyên nano-USD. Trước mỗi lần gọi mock, hệ thống giữ trước chi phí input và output dài nhất có thể trong `MOCK_RESPONSES`, sau đó hoàn phần chênh lệch theo câu trả lời thực tế. Token được ước tính bằng số từ nhân 2, phục vụ mock của lab. Khi thay bằng LLM thật cần dùng token usage từ nhà cung cấp và giới hạn output tương ứng.
+
+Nếu process bị kill hoặc mất Redis sau khi giữ tiền, phần giữ chưa quyết toán còn lại để tránh tiêu không được ghi nhận; có thể cần cơ chế đối soát cho production thực tế. Key cũ giữ tới hết ngày kế tiếp để request chạy qua nửa đêm quyết toán đúng ngày. Redis không tự fallback sang RAM.
 
 ---
 
@@ -83,19 +89,26 @@ Script tự khởi động agent của bạn, gọi API thật, build và chạy
 
 ```bash
 pip install -r requirements.txt
-cp .env.example .env
+cp -n .env.example .env
+# Điền AGENT_API_KEY bằng key local ngẫu nhiên của bạn trong .env.
+# Không commit .env. ENVIRONMENT=production bắt buộc có key.
 
 # Chạy nhanh không cần Docker (cần Redis riêng nếu muốn test rate limit thật)
-AGENT_API_KEY=dev-key uvicorn app.main:app --reload
+uvicorn app.main:app --reload
 
 # Chạy cả agent + redis
-docker compose up --build
+docker compose -p k5-day14-final up --build
 
+# Chạy ở terminal khác, cùng thư mục và virtualenv:
+AGENT_API_KEY=$(python -c 'from dotenv import dotenv_values; print(dotenv_values(".env")["AGENT_API_KEY"])')
 curl http://localhost:8000/health
 curl -X POST http://localhost:8000/ask \
-     -H "X-API-Key: dev-key" -H "Content-Type: application/json" \
+     -H "X-API-Key: $AGENT_API_KEY" -H "Content-Type: application/json" \
      -d '{"question": "What is deployment?"}'
+unset AGENT_API_KEY
 ```
+
+Chọn chạy local hoặc Compose; dừng server cũ trước vì cùng dùng cổng 8000. Sau khi chạy Compose, dọn bằng `docker compose -p k5-day14-final down` (thêm `-v` nếu chủ động muốn xóa cả dữ liệu Redis của lab).
 
 ---
 
@@ -107,6 +120,22 @@ python check_production_ready.py --skip-docker   # chế độ nhanh khi đang l
 python check_production_ready.py --static-only   # chỉ đọc file, không chạy agent
 python check_production_ready.py --public-url https://your-app.railway.app   # thêm kiểm tra URL đã deploy
 ```
+
+Integration tests bổ sung (cần Redis thật theo `REDIS_URL`; dùng key prefix riêng, không FLUSHDB):
+
+```bash
+python -m unittest discover -s tests -v
+```
+
+Máy Windows này chưa kết nối Docker daemon từ Ubuntu. Lần chấm đầy đủ dùng container Linux với requirements của Part 6, Docker CLI và socket Docker Desktop, giữ nguyên script chấm. Từ gốc repo, PowerShell:
+
+```powershell
+docker build -f reports/cp5-checker.Dockerfile -t k5-day14-cp5-checker 06-lab-complete
+$cp5Workspace = (Get-Location).Path
+docker run --rm --network host --mount "type=bind,source=$cp5Workspace,target=/workspace,readonly" --mount type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock k5-day14-cp5-checker python check_production_ready.py
+```
+
+Container này chỉ là công cụ chấm local, có quyền dùng Docker daemon để script tự build/chạy/dọn các container kiểm tra. Image agent production không chứa Docker CLI và chạy bằng user `agent`.
 
 - Kết quả in theo từng tiêu chí: ✅ đạt · ❌ chưa đạt · ⚠️ chưa kiểm tra được.
 - **Chỉ PASS khi cả 12 tiêu chí ✅.** Mục ⚠️ (vd máy chưa bật Docker) cũng tính là chưa đạt, nên khi nộp bài phải chạy chế độ đầy đủ.
@@ -127,7 +156,7 @@ railway up
 railway domain        # nhận public URL
 ```
 
-**Render:** push repo lên GitHub → Render Dashboard → New → Blueprint → chọn repo (Render đọc `render.yaml`) → điền secret → Deploy.
+Chọn service root `06-lab-complete/`, đặt `AGENT_API_KEY` bằng secret trên nền tảng và `REDIS_URL` trỏ tới Redis cloud. Kiểm tra cả `/health` và `/ready` sau deploy. Chưa có Render Blueprint; nếu đổi nền tảng cần viết `render.yaml` trước.
 
 Sau khi deploy: `python check_production_ready.py --public-url <URL>` và ghi URL vào `DEPLOYMENT.md` (xem [DAY14_DELIVERY_CHECKLIST.md](../DAY14_DELIVERY_CHECKLIST.md)).
 

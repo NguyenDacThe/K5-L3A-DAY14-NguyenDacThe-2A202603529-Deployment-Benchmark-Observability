@@ -1,0 +1,43 @@
+{
+  "checked_at_utc": "2026-11-25T10:06:22.708069+00:00",
+  "base_url": "https://agent-production-702ecd1c.up.railway.app",
+  "checks": [
+    {
+      "name": "health",
+      "method": "GET",
+      "path": "/health",
+      "expected_status": 200,
+      "actual_status": 200,
+      "passed": true,
+      "response_body": "{\"status\":\"ok\",\"environment\":\"production\"}"
+    },
+    {
+      "name": "ready",
+      "method": "GET",
+      "path": "/ready",
+      "expected_status": 200,
+      "actual_status": 200,
+      "passed": true,
+      "response_body": "{\"ready\":true}"
+    },
+    {
+      "name": "ask_without_key",
+      "method": "POST",
+      "path": "/ask",
+      "expected_status": 401,
+      "actual_status": 401,
+      "passed": true,
+      "response_body": "{\"detail\":\"Invalid or missing API key\"}"
+    },
+    {
+      "name": "ask_with_key",
+      "method": "POST",
+      "path": "/ask",
+      "expected_status": 200,
+      "actual_status": 200,
+      "passed": true,
+      "response_body": "{\"question\":\"Hello\",\"answer\":\"Tôi là AI agent được deploy lên cloud. Câu hỏi của bạn đã được nhận.\",\"usage\":{\"cost_usd\":1.83e-05}}"
+    }
+  ],
+  "passed": true
+}

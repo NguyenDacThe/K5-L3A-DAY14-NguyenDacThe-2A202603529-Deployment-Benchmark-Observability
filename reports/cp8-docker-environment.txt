@@ -1,0 +1,1 @@
+﻿16 CPUs, 8174555136 bytes memory, Docker 29.9.3
